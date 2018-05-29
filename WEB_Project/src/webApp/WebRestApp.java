@@ -13,7 +13,7 @@ public class WebRestApp extends Application {
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
-		classes.add(ControllerUser.class);
+		classes.add(ControllerUser.class); 
 		return classes;
 	}
 }
