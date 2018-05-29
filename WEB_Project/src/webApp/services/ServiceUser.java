@@ -2,6 +2,7 @@ package webApp.services;
 
 import webApp.dao.DAOUser;
 import webApp.entities.User;
+import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
 
@@ -31,18 +32,18 @@ public class ServiceUser {
 		return false;
 	}
 
-	public boolean login(User user) {
-		if (user.username == null || user.username.equals("") || user.password == null || user.password.equals(""))
-			return false;
-
-		return this.dao.login(user.username, user.password);
-	}
-
 	public boolean validateUser(String token) {
 		if (token.equals("utilized"))
 			return false;
 
 		return this.dao.validateUser(token);
+	}
+
+	public LoginResponse login(User user) {
+		if (user.username == null || user.username.equals("") || user.password == null || user.password.equals(""))
+			return new LoginResponse(false);
+
+		return this.dao.login(user);
 	}
 
 }

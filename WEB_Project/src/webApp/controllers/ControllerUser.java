@@ -11,6 +11,7 @@ import javax.ws.rs.QueryParam;
 
 import webApp.dao.DAOUser;
 import webApp.entities.User;
+import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
 
 @Stateless
@@ -32,14 +33,6 @@ public class ControllerUser {
 		return this.service.register(user);
 	}
 
-	@POST
-	@Path("/login")
-	@Produces("text/json")
-	@Consumes("application/json")
-	public boolean logIn(User user) {
-		return this.service.login(user);
-	}
-
 	@GET
 	@Produces("text/json")
 	@Path("/validation")
@@ -50,4 +43,13 @@ public class ControllerUser {
 			return "email verification error";
 		}
 	}
+
+	@POST
+	@Path("/login")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public LoginResponse logIn(User user) {
+		return this.service.login(user);
+	}
+
 }

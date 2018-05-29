@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import webApp.entities.User;
+import webApp.responses.LoginResponse;
+import webApp.utils.UtilsMethods;
 
 public class DAOUser extends DAO<User> {
 
@@ -30,36 +32,6 @@ public class DAOUser extends DAO<User> {
 			closeStat(st);
 
 			return true;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection(conn);
-		}
-
-		return false;
-	}
-
-	public boolean login(String username, String password) {
-		Connection conn = createConnection();
-
-		if (conn == null)
-			return false;
-
-		try {
-			PreparedStatement st = conn
-					.prepareStatement(String.format("SELECT * FROM %s WHERE %s = \"%s\" AND %s = \"%s\"",
-							this.clazz.getSimpleName(), User.USERNAME, username, User.PASSWORD, password));
-
-			ResultSet rs = st.executeQuery();
-
-			boolean status = false;
-			if (rs.next())
-				status = true;
-
-			closeStat(st);
-			closeResultSet(rs);
-
-			return status;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -146,6 +118,44 @@ public class DAOUser extends DAO<User> {
 			closeConnection(conn);
 		}
 		return false;
+	}
+
+	public LoginResponse login(User user) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return new LoginResponse(false);
+
+		try {
+			PreparedStatement st = conn
+					.prepareStatement(String.format("SELECT * FROM %s WHERE %s = \"%s\" AND %s = \"%s\"",
+							this.clazz.getSimpleName(), User.USERNAME, user.username, User.PASSWORD, user.password));
+
+			ResultSet rs = st.executeQuery();
+
+			boolean status = false;
+			if (rs.next())
+				status = true;
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			if (status) {
+				// napravi cookie, izbaci iz baze sve cookie ot tog korisnika i stavi ovaj
+				// prosledi mu preko LoginResponse novi cookie (URADJENO)
+
+				String cookie = UtilsMethods.generateToken(100);
+				return new LoginResponse(true, cookie);
+			} else {
+				return new LoginResponse(false);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return new LoginResponse(false);
 	}
 
 }
