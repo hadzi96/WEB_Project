@@ -127,16 +127,13 @@ public class DAOUser extends DAO<User> {
 				closeResultSet(rs);
 
 				if (status) {
-					st = conn.prepareStatement(
-							String.format("UPDATE %s SET isActive = true WHERE %s = \"%s\" and %s = \"%s\"",
-									this.clazz.getSimpleName(), User.USERNAME, user.username, User.OPTIMISTIC_LOCK,
-									user.optimisticLock));
-
-					rs = st.executeQuery();
-					if (rs.next()) {
-						status = true;
-						break;
-					}
+					st = conn.prepareStatement(String.format(
+							"UPDATE %s SET isActive = true, %s = \"%s\" WHERE %s = \"%s\" and %s = \"%s\"",
+							this.clazz.getSimpleName(), User.OPTIMISTIC_LOCK, user.optimisticLock + 1, User.USERNAME,
+							user.username, User.OPTIMISTIC_LOCK, user.optimisticLock));
+ 
+					st.execute();
+					break;
 				}
 
 			}
