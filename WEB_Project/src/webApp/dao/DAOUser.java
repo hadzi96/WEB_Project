@@ -132,14 +132,13 @@ public class DAOUser extends DAO<User> {
 									this.clazz.getSimpleName(), User.USERNAME, user.username, User.OPTIMISTIC_LOCK,
 									user.optimisticLock));
 
-					st.executeQuery();
+					rs = st.executeQuery();
+					if (rs.next()) {
+						status = true;
+						break;
+					}
 				}
 
-				rs = st.executeQuery();
-				if (rs.next()) {
-					status = true;
-					break;
-				}
 			}
 			closeStat(st);
 			closeResultSet(rs);

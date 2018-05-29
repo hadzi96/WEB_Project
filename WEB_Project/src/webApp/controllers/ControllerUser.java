@@ -1,7 +1,5 @@
 package webApp.controllers;
 
-import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -31,7 +29,6 @@ public class ControllerUser {
 	@Produces("text/json")
 	@Consumes("application/json")
 	public boolean register(User user) {
-		System.out.println("RADIM!!!!");
 		return this.service.register(user);
 	}
 
@@ -39,7 +36,7 @@ public class ControllerUser {
 	@Path("/login")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean logIn(User user) { 
+	public boolean logIn(User user) {
 		return this.service.login(user);
 	}
 
