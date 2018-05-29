@@ -1,49 +1,59 @@
 package webApp.utils;
+
+import java.util.Random;
+
 /**
  * Klasa sa pomocnim metodam
+ * 
  * @author user
  *
  */
 public final class UtilsMethods {
 	/**
-	 * Pomocna metoda koja konvertuje object o u broj i u slucaju da object o ne moze da se konvertuje vraca se vrednost 0.
+	 * Pomocna metoda koja konvertuje object o u broj i u slucaju da object o ne
+	 * moze da se konvertuje vraca se vrednost 0.
+	 * 
 	 * @param o
 	 * @return
 	 */
-	public static int saftyConversionInt(Object o){
+	public static int saftyConversionInt(Object o) {
 		int id = 0;
-		try{
+		try {
 			id = Integer.parseInt(o == null ? "0" : o.toString());
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 		return id;
 	}
-	
+
 	/**
-	 * Pomocna metoda koja konvertuje object o u broj i u slucaju da object o ne moze da se konvertuje vraca se vrednost 0.
+	 * Pomocna metoda koja konvertuje object o u broj i u slucaju da object o ne
+	 * moze da se konvertuje vraca se vrednost 0.
+	 * 
 	 * @param o
 	 * @return
 	 */
-	public static double saftyConversionDouble(Object o){
+	public static double saftyConversionDouble(Object o) {
 		double id = 0;
-		try{
+		try {
 			id = Double.parseDouble(o == null ? "0" : o.toString());
-		}catch(NumberFormatException e){
+		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
 		return id;
 	}
-	
+
 	/**
-	 * Pomocna metoda koja sluzi da konvertuje object o u string i u slucaju da je o == null vraca se prazan string.
+	 * Pomocna metoda koja sluzi da konvertuje object o u string i u slucaju da je o
+	 * == null vraca se prazan string.
+	 * 
 	 * @param o
 	 * @return
 	 */
-	public static String saftyConversionToStr(Object o){
+	public static String saftyConversionToStr(Object o) {
 		return o == null ? "" : o.toString();
 	}
-	
+
 	public static boolean saftyConversionToBoolean(Object o) {
 		boolean b = false;
 		try {
@@ -52,5 +62,14 @@ public final class UtilsMethods {
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	static public String generateToken(int length) {
+		String CharSet = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ1234567890";
+		String Token = "";
+		for (int a = 1; a <= length; a++) {
+			Token += CharSet.charAt(new Random().nextInt(CharSet.length()));
+		}
+		return Token;
 	}
 }

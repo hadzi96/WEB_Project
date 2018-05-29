@@ -3,6 +3,7 @@ package webApp.services;
 import webApp.dao.DAOUser;
 import webApp.entities.User;
 import webApp.utils.EmailSender;
+import webApp.utils.UtilsMethods;
 
 public class ServiceUser {
 	DAOUser dao;
@@ -19,7 +20,7 @@ public class ServiceUser {
 		}
 
 		if (!this.dao.contais(user.username)) {
-			String token = "1234";
+			String token = UtilsMethods.generateToken(60);
 
 			if (this.dao.register(user, token)) {
 				EmailSender.sendVerification(user.email, token);
@@ -34,10 +35,13 @@ public class ServiceUser {
 		if (user.username == null || user.username.equals("") || user.password == null || user.password.equals(""))
 			return false;
 
-		return this.dao.login(user.username, user.password); 
+		return this.dao.login(user.username, user.password);
 	}
 
-	public boolean validateUser(String token) { 
+	public boolean validateUser(String token) {
+		if (token.equals("utilized"))
+			return false;
+
 		return this.dao.validateUser(token);
 	}
 

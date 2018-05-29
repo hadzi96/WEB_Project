@@ -128,10 +128,10 @@ public class DAOUser extends DAO<User> {
 
 				if (status) {
 					st = conn.prepareStatement(String.format(
-							"UPDATE %s SET isActive = true, %s = \"%s\" WHERE %s = \"%s\" and %s = \"%s\"",
+							"UPDATE %s SET isActive = true, %s = \"%s\", activationToken = \"utilized\" WHERE %s = \"%s\" and %s = \"%s\"",
 							this.clazz.getSimpleName(), User.OPTIMISTIC_LOCK, user.optimisticLock + 1, User.USERNAME,
 							user.username, User.OPTIMISTIC_LOCK, user.optimisticLock));
- 
+
 					st.execute();
 					break;
 				}

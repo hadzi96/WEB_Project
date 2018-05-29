@@ -43,7 +43,11 @@ public class ControllerUser {
 	@GET
 	@Produces("text/json")
 	@Path("/validation")
-	public boolean validateUser(@QueryParam("token") String token) {
-		return this.service.validateUser(token);
+	public String validateUser(@QueryParam("token") String token) {
+		if (this.service.validateUser(token)) {
+			return "email: verified\nAccount: activated";
+		} else {
+			return "email verification error";
+		}
 	}
 }
