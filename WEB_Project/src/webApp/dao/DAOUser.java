@@ -141,10 +141,16 @@ public class DAOUser extends DAO<User> {
 			closeResultSet(rs);
 
 			if (status) {
-				// napravi cookie, izbaci iz baze sve cookie ot tog korisnika i stavi ovaj
-				// prosledi mu preko LoginResponse novi cookie (URADJENO)
-
 				String cookie = UtilsMethods.generateToken(100);
+				st = conn.prepareStatement("DELETE FROM cookie WHERE `timeout` < now()");
+				st.execute();
+				closeStat(st);
+
+				st = conn.prepareStatement(
+						String.format("INSERT INTO `cookie` (`username`, `value`, `timeout`) VALUES\r\n"
+								+ "('%s', '%s', NOW()+ INTERVAL 1 DAY);", user.username, cookie));
+				st.execute();
+				closeStat(st);
 				return new LoginResponse(true, cookie);
 			} else {
 				return new LoginResponse(false);
