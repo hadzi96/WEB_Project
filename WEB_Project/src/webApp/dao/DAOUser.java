@@ -127,8 +127,8 @@ public class DAOUser extends DAO<User> {
 			return new LoginResponse(false);
 
 		try {
-			PreparedStatement st = conn
-					.prepareStatement(String.format("SELECT * FROM %s WHERE %s = \"%s\" AND %s = \"%s\"",
+			PreparedStatement st = conn.prepareStatement(
+					String.format("SELECT * FROM %s WHERE %s = \"%s\" AND %s = \"%s\" AND isActive = true",
 							this.clazz.getSimpleName(), User.USERNAME, user.username, User.PASSWORD, user.password));
 
 			ResultSet rs = st.executeQuery();
