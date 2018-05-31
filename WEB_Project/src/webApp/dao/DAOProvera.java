@@ -14,6 +14,7 @@ public class DAOProvera extends DAO<User> {
 	}
 
 	public boolean hasCookie(String cookie) {
+		deleteOldCookies();
 		Connection conn = createConnection();
 
 		if (conn == null)
@@ -39,6 +40,24 @@ public class DAOProvera extends DAO<User> {
 			closeConnection(conn);
 		}
 		return false;
+	}
+
+	public void deleteOldCookies() {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return;
+
+		try {
+			PreparedStatement st = conn.prepareStatement("DELETE FROM cookie WHERE timeout < NOW()");
+			st.execute();
+			closeStat(st);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
 	}
 
 }

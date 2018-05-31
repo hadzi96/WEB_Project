@@ -7,6 +7,7 @@ import com.sun.java_cup.internal.runtime.Symbol;
 
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProvera;
+import webApp.entities.OpenParameter;
 import webApp.entities.Photo;
 import webApp.entities.SearchParameter;
 import webApp.utils.UtilsMethods;
@@ -56,5 +57,13 @@ public class ServicePhoto {
 		// getAll
 		System.out.println("GET ALL");
 		return dao.search(UtilsMethods.getAllStatement(offst));
+	}
+
+	// open just one (by id)
+	public List<Photo> open(OpenParameter parameters) {
+		if (!daoProvera.hasCookie(parameters.cookie))
+			return null;
+
+		return dao.search(UtilsMethods.openStatement(parameters.id));
 	}
 }

@@ -109,4 +109,8 @@ public final class UtilsMethods {
 		offset *= 10;
 		return String.format("SELECT * FROM photo WHERE onSale = true ORDER BY id LIMIT 10 OFFSET %d", offset);
 	}
+
+	static public String openStatement(int id) {
+		return String.format("SELECT * FROM photo WHERE onSale = true AND id = %d", id);
+	}
 }

@@ -11,6 +11,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import webApp.dao.DAOPhoto;
+import webApp.entities.OpenParameter;
 import webApp.entities.Photo;
 import webApp.entities.SearchParameter;
 import webApp.services.ServicePhoto;
@@ -33,14 +34,13 @@ public class ControllerPhoto {
 	public List<Photo> search(SearchParameter parameters) {
 		return service.search(parameters);
 	}
-	
-	
+
 	@POST
 	@Path("/open")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> open(SearchParameter parameters) {
-		return service.search(parameters);
+	public List<Photo> open(OpenParameter parameters) {
+		return service.open(parameters);
 	}
 
 }
