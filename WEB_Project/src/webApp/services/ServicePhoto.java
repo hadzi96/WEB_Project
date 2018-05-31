@@ -8,7 +8,7 @@ import com.sun.java_cup.internal.runtime.Symbol;
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProvera;
 import webApp.entities.Photo;
-import webApp.entities.Search;
+import webApp.entities.SearchParameter;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {
@@ -25,7 +25,7 @@ public class ServicePhoto {
 		this.daoProvera = new DAOProvera();
 	}
 
-	public List<Photo> search(Search parameters) {
+	public List<Photo> search(SearchParameter parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 

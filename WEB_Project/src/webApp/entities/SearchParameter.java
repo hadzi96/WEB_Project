@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 import webApp.utils.UtilsMethods;
 
-public class Search extends BasicEntity implements Serializable {
+public class SearchParameter extends BasicEntity implements Serializable {
 
-	public Search() {
+	public SearchParameter() {
 		super();
 		this.columnsName.add(COOKIE);
 		this.columnsName.add(OFFSET);

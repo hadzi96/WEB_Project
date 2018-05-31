@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 
 import webApp.dao.DAOPhoto;
 import webApp.entities.Photo;
-import webApp.entities.Search;
+import webApp.entities.SearchParameter;
 import webApp.services.ServicePhoto;
 
 @Stateless
@@ -30,7 +30,16 @@ public class ControllerPhoto {
 	@Path("/search")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> searchByName(Search parameters) {
+	public List<Photo> search(SearchParameter parameters) {
+		return service.search(parameters);
+	}
+	
+	
+	@POST
+	@Path("/open")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public List<Photo> open(SearchParameter parameters) {
 		return service.search(parameters);
 	}
 
