@@ -3,6 +3,8 @@ package webApp.services;
 import java.util.Arrays;
 import java.util.List;
 
+import com.sun.java_cup.internal.runtime.Symbol;
+
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProvera;
 import webApp.entities.Photo;
@@ -32,6 +34,7 @@ public class ServicePhoto {
 		// search AND filter
 		if (parameters.search != null && searchOptions.contains(parameters.search) && parameters.filter != null
 				&& filterOptions.contains(parameters.filter)) {
+			System.out.println("SEARCH AND FILTER");
 			return dao.search(UtilsMethods.searchAndFilterStatement(parameters.search, parameters.searchValue,
 					parameters.filter, offst));
 		}
@@ -39,16 +42,19 @@ public class ServicePhoto {
 		// search
 		if (parameters.search != null && searchOptions.contains(parameters.search)
 				&& (parameters.filter == null || !filterOptions.contains(parameters.filter))) {
-			return dao.search(UtilsMethods.searchStatement(parameters.search, parameters.search, offst));
+			System.out.println("SEARCH");
+			return dao.search(UtilsMethods.searchStatement(parameters.search, parameters.searchValue, offst));
 		}
 
 		// filter
 		if (parameters.filter != null && filterOptions.contains(parameters.filter)
 				&& (parameters.search == null || !searchOptions.contains(parameters.search))) {
+			System.out.println("FILTER");
 			return dao.search(UtilsMethods.filterStatement(parameters.filter, offst));
 		}
 
 		// getAll
+		System.out.println("GET ALL");
 		return dao.search(UtilsMethods.getAllStatement(offst));
 	}
 }
