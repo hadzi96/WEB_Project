@@ -74,11 +74,13 @@ public final class UtilsMethods {
 	}
 
 	static public String searchStatement(String search, String searchValue, int offset) {
+		offset *= 10;
 		return String.format("SELECT * FROM photo WHERE onSale = true AND %s = '%s' ORDER BY id LIMIT 10 OFFSET %d",
 				search, searchValue, offset);
 	}
 
 	static public String filterStatement(String filter, int offset) {
+		offset *= 10;
 		String order;
 		if (filter.charAt(filter.length() - 1) == 'R')
 			order = "ASC";
@@ -91,6 +93,7 @@ public final class UtilsMethods {
 	}
 
 	static public String searchAndFilterStatement(String search, String searchValue, String filter, int offset) {
+		offset *= 10;
 		String order;
 		if (filter.charAt(filter.length() - 1) == 'R')
 			order = "ASC";
@@ -103,6 +106,7 @@ public final class UtilsMethods {
 	}
 
 	static public String getAllStatement(int offset) {
+		offset *= 10;
 		return String.format("SELECT * FROM photo WHERE onSale = true ORDER BY id LIMIT 10 OFFSET %d", offset);
 	}
 }
