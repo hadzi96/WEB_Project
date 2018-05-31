@@ -5,9 +5,9 @@ import java.io.Serializable;
 import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
-public class OpenParameter extends BasicEntity implements Serializable {
+public class OpenReq extends BasicEntity implements Serializable {
 
-	public OpenParameter() {
+	public OpenReq() {
 		super();
 		this.columnsName.add(COOKIE);
 		this.columnsName.add(ID);

@@ -8,8 +8,8 @@ import com.sun.java_cup.internal.runtime.Symbol;
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProvera;
 import webApp.entities.Photo;
-import webApp.entities.req.OpenParameter;
-import webApp.entities.req.SearchParameter;
+import webApp.entities.req.OpenReq;
+import webApp.entities.req.SearchReq;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {
@@ -26,7 +26,7 @@ public class ServicePhoto {
 		this.daoProvera = new DAOProvera();
 	}
 
-	public List<Photo> search(SearchParameter parameters) {
+	public List<Photo> search(SearchReq parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 
@@ -60,7 +60,7 @@ public class ServicePhoto {
 	}
 
 	// open just one (by id)
-	public List<Photo> open(OpenParameter parameters) {
+	public List<Photo> open(OpenReq parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 

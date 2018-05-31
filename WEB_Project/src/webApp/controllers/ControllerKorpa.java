@@ -14,8 +14,8 @@ import webApp.dao.DAOKorpa;
 import webApp.dao.DAOPhoto;
 import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
-import webApp.entities.req.OpenParameter;
-import webApp.entities.req.SearchParameter;
+import webApp.entities.req.OpenReq;
+import webApp.entities.req.SearchReq;
 import webApp.services.ServiceKorpa;
 import webApp.services.ServicePhoto;
 
