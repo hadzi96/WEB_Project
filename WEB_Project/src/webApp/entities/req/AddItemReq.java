@@ -1,10 +1,11 @@
-package webApp.entities;
+package webApp.entities.req;
 
 import java.io.Serializable;
 import java.sql.Date;
 
 import javax.servlet.http.Cookie;
 
+import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
 public class AddItemReq extends BasicEntity implements Serializable {

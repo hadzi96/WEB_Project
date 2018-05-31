@@ -11,9 +11,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import webApp.dao.DAOPhoto;
-import webApp.entities.OpenParameter;
 import webApp.entities.Photo;
-import webApp.entities.SearchParameter;
+import webApp.entities.req.OpenParameter;
+import webApp.entities.req.SearchParameter;
 import webApp.services.ServicePhoto;
 
 @Stateless

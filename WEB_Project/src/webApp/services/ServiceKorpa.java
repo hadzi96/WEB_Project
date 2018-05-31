@@ -2,8 +2,8 @@ package webApp.services;
 
 import webApp.dao.DAOKorpa;
 import webApp.dao.DAOProvera;
-import webApp.entities.AddItemReq;
 import webApp.entities.Photo;
+import webApp.entities.req.AddItemReq;
 
 public class ServiceKorpa {
 

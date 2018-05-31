@@ -1,7 +1,8 @@
-package webApp.entities;
+package webApp.entities.req;
 
 import java.io.Serializable;
 
+import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
 public class SearchParameter extends BasicEntity implements Serializable {

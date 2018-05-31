@@ -12,10 +12,10 @@ import javax.ws.rs.Produces;
 
 import webApp.dao.DAOKorpa;
 import webApp.dao.DAOPhoto;
-import webApp.entities.AddItemReq;
-import webApp.entities.OpenParameter;
 import webApp.entities.Photo;
-import webApp.entities.SearchParameter;
+import webApp.entities.req.AddItemReq;
+import webApp.entities.req.OpenParameter;
+import webApp.entities.req.SearchParameter;
 import webApp.services.ServiceKorpa;
 import webApp.services.ServicePhoto;
 

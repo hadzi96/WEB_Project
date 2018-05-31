@@ -7,9 +7,9 @@ import com.sun.java_cup.internal.runtime.Symbol;
 
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProvera;
-import webApp.entities.OpenParameter;
 import webApp.entities.Photo;
-import webApp.entities.SearchParameter;
+import webApp.entities.req.OpenParameter;
+import webApp.entities.req.SearchParameter;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {

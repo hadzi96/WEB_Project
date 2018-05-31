@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import webApp.entities.AddItemReq;
 import webApp.entities.Photo;
 import webApp.entities.User;
+import webApp.entities.req.AddItemReq;
 
 public class DAOKorpa extends DAO<Photo> {
 
