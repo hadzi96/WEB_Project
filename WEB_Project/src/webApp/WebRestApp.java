@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import webApp.controllers.ControllerKorpa;
 import webApp.controllers.ControllerPhoto;
 import webApp.controllers.ControllerUser;
 
@@ -16,6 +17,7 @@ public class WebRestApp extends Application {
 		Set<Class<?>> classes = new HashSet<Class<?>>();
 		classes.add(ControllerUser.class);
 		classes.add(ControllerPhoto.class);
+		classes.add(ControllerKorpa.class);
 		return classes;
 	}
 }

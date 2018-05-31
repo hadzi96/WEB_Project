@@ -42,6 +42,35 @@ public class DAOProvera extends DAO<User> {
 		return false;
 	}
 
+	public String getUsernamefromCookie(String cookie) {
+		deleteOldCookies();
+		Connection conn = createConnection();
+		String username = null;
+
+		if (conn == null)
+			return username;
+
+		try {
+			PreparedStatement st = conn
+					.prepareStatement(String.format("SELECT * FROM cookie WHERE value = '%s'", cookie));
+
+			ResultSet rs = st.executeQuery();
+
+			if (rs.next())
+				username = rs.getString(1);
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			return username;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+		return username;
+	}
+
 	public void deleteOldCookies() {
 		Connection conn = createConnection();
 
