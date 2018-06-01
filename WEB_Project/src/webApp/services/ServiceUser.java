@@ -1,16 +1,23 @@
 package webApp.services;
 
+import webApp.dao.DAOCard;
+import webApp.dao.DAOProveraUser;
 import webApp.dao.DAOUser;
 import webApp.entities.User;
+import webApp.entities.req.AddCardReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
 
 public class ServiceUser {
 	DAOUser dao;
+	DAOProveraUser daoProvera;
+	DAOCard daoCard;
 
 	public ServiceUser() {
 		this.dao = new DAOUser();
+		this.daoProvera = new DAOProveraUser();
+		this.daoCard = new DAOCard();
 	}
 
 	public boolean register(User user) {
@@ -44,6 +51,17 @@ public class ServiceUser {
 			return new LoginResponse(false);
 
 		return this.dao.login(user);
+	}
+
+	public boolean addCard(AddCardReq req) {
+		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		if (username == null)
+			return false;
+		if (req.creditCard < 1000000000000000L || req.creditCard > 9999999999999999L) {
+			return false;
+		}
+
+		return daoCard.addCard(username, req.creditCard);
 	}
 
 }

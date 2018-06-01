@@ -8,9 +8,9 @@ import javax.servlet.http.Cookie;
 import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
-public class BuyReq extends BasicEntity implements Serializable {
+public class GetCardReq extends BasicEntity implements Serializable {
 
-	public BuyReq() {
+	public GetCardReq() {
 		super();
 		this.columnsName.add(COOKIE);
 		this.columnsName.add(USER_LOCK);

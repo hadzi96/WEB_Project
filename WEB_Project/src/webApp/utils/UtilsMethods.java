@@ -25,6 +25,16 @@ public final class UtilsMethods {
 		}
 		return id;
 	}
+	
+	public static long saftyConversionLong(Object o) {
+		long id = 0;
+		try {
+			id = Long.parseLong(o == null ? "0" : o.toString());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
 
 	/**
 	 * Pomocna metoda koja konvertuje object o u broj i u slucaju da object o ne

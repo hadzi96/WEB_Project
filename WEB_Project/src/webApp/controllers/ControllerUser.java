@@ -10,7 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
 import webApp.dao.DAOUser;
+import webApp.entities.Card;
 import webApp.entities.User;
+import webApp.entities.req.AddCardReq;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
 
@@ -50,6 +52,14 @@ public class ControllerUser {
 	@Consumes("application/json")
 	public LoginResponse logIn(User user) {
 		return this.service.login(user);
+	}
+
+	@POST
+	@Path("/addcard")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean addCard(AddCardReq req) {
+		return service.addCard(req);
 	}
 
 }

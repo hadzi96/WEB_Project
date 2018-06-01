@@ -49,7 +49,11 @@ public class ServiceKorpa {
 		if (username == null)
 			return false;
 
-		// ovde (saljeno slike na email) && (ucitavamo slike iz korpe u KUPLJENE_PHOTO) && (brisemo iz korpe)
+		if (req.creditCard < 1000000000000000L || req.creditCard > 9999999999999999L) {
+			return false;
+		}
+
+		// ovde (saljeno slike na email)
 		return dao.buy(username, req.optimisticLock);
 	}
 
