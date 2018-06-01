@@ -12,6 +12,7 @@ import javax.ws.rs.Produces;
 import webApp.dao.DAOKorpa;
 import webApp.entities.Item;
 import webApp.entities.req.AddItemReq;
+import webApp.entities.req.BuyReq;
 import webApp.entities.req.GetKorpaReq;
 import webApp.services.ServiceKorpa;
 
@@ -40,6 +41,14 @@ public class ControllerKorpa {
 	@Consumes("application/json")
 	public List<Item> getKorpa(GetKorpaReq req) {
 		return service.getKorpa(req);
+	}
+
+	@POST
+	@Path("/buy")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean buy(BuyReq req) {
+		return service.buy(req);
 	}
 
 }

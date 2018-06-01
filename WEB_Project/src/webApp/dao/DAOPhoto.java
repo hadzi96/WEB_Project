@@ -44,18 +44,6 @@ public class DAOPhoto extends DAO<Photo> {
 		return null;
 	}
 
-	public List<Photo> filter(int offset, String filter) {
-
-		return null;
-	}
-
-	public List<Photo> searchAndFilter(int offset, String search, String searchValue, String filter) {
-		if (searchValue == null || searchValue.equals(""))
-			return filter(offset, filter);
-
-		return null;
-	}
-
 	public Photo getPhoto(int id, String rezolucija) {
 		Connection conn = createConnection();
 		Photo photo = null;

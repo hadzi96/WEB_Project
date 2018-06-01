@@ -76,4 +76,46 @@ public class DAOKorpa extends DAO<Item> {
 		return null;
 	}
 
+	public boolean buy(String user, int optimisticLock) {
+		DAOPhoto daoPhoto = new DAOPhoto();
+		List<Item> items = getKorpa(user);
+		List<String> autors = new ArrayList<>();
+
+		for (Item i : items) {
+			autors.add(daoPhoto.getPhoto(i.idSlike, i.rezolucija).autor);
+		}
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return false;
+
+		try {
+			for (Item i : items) {
+				String statement = String.format("SET @username := NULL;"
+						+ "SELECT @username := `username` FROM user WHERE username = '%s' AND optimisticLock = %d;"
+						+ "INSERT INTO `kupljene` (`idSlike`, `buyer`, `autor`)" + " VALUES (%d, @username, '%s')",
+						user, optimisticLock, i.idSlike, autors.get(items.indexOf(i)));
+				PreparedStatement st = conn.prepareStatement(statement);
+
+				st.execute();
+				closeStat(st);
+				// --------------------------------------------------------------------------------------------------
+
+				statement = String.format("DELETE FROM korpa WHERE id = %d;", i.id);
+				st = conn.prepareStatement(statement);
+
+				st.execute();
+				closeStat(st);
+			}
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
 }

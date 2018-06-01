@@ -8,6 +8,7 @@ import webApp.dao.DAOProveraUser;
 import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
+import webApp.entities.req.BuyReq;
 import webApp.entities.req.GetKorpaReq;
 
 public class ServiceKorpa {
@@ -41,6 +42,15 @@ public class ServiceKorpa {
 			return null;
 
 		return dao.getKorpa(username);
+	}
+
+	public boolean buy(BuyReq req) {
+		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		if (username == null)
+			return false;
+
+		// ovde (saljeno slike na email) && (ucitavamo slike iz korpe u KUPLJENE_PHOTO) && (brisemo iz korpe)
+		return dao.buy(username, req.optimisticLock);
 	}
 
 }
