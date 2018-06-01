@@ -1,10 +1,14 @@
 package webApp.services;
 
+import java.util.List;
+
 import webApp.dao.DAOCard;
 import webApp.dao.DAOProveraUser;
 import webApp.dao.DAOUser;
+import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
+import webApp.entities.req.GetCardReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
@@ -62,6 +66,14 @@ public class ServiceUser {
 		}
 
 		return daoCard.addCard(username, req.creditCard);
+	}
+
+	public List<Card> getCard(GetCardReq req) {
+		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		if (username == null)
+			return null;
+
+		return daoCard.getCards(username);
 	}
 
 }

@@ -1,5 +1,7 @@
 package webApp.controllers;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
@@ -9,10 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import webApp.dao.DAOUser;
 import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
+import webApp.entities.req.GetCardReq;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
 
@@ -60,6 +62,14 @@ public class ControllerUser {
 	@Consumes("application/json")
 	public boolean addCard(AddCardReq req) {
 		return service.addCard(req);
+	}
+
+	@POST
+	@Path("/getcards")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public List<Card> addCard(GetCardReq req) {
+		return service.getCard(req);
 	}
 
 }
