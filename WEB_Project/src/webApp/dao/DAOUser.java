@@ -23,10 +23,10 @@ public class DAOUser extends DAO<User> {
 
 		try {
 			PreparedStatement st = conn.prepareStatement(String.format(
-					"INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", false, \"%s\", \"%s\", \"%s\")",
+					"INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s, %s) VALUES (\"%s\", \"%s\", \"%s\", \"%s\", %b, \"%s\", \"%s\", \"%s\")",
 					this.clazz.getSimpleName(), User.USERNAME, User.PASSWORD, User.EMAIL, User.DRZAVA, User.IS_ACTIVE,
 					User.TYPE, User.ACTIVATION_TOKEN, User.OPTIMISTIC_LOCK, user.username, user.password, user.email,
-					user.drzava, "kupac", activationToken, 0));
+					user.drzava, user.isActive, user.type, activationToken, 0));
 
 			st.execute();
 			closeStat(st);

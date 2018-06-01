@@ -13,7 +13,7 @@ import webApp.dao.DAOKorpa;
 import webApp.entities.Item;
 import webApp.entities.req.AddItemReq;
 import webApp.entities.req.BuyReq;
-import webApp.entities.req.GetReq;
+import webApp.entities.req.Cookie;
 import webApp.services.ServiceKorpa;
 
 @Stateless
@@ -39,7 +39,7 @@ public class ControllerKorpa {
 	@Path("/getKorpa")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Item> getKorpa(GetReq req) {
+	public List<Item> getKorpa(Cookie req) {
 		return service.getKorpa(req);
 	}
 

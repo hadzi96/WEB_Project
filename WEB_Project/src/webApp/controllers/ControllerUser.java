@@ -14,7 +14,8 @@ import javax.ws.rs.QueryParam;
 import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
-import webApp.entities.req.GetReq;
+import webApp.entities.req.AddOpReq;
+import webApp.entities.req.Cookie;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
 
@@ -68,7 +69,7 @@ public class ControllerUser {
 	@Path("/getcards")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Card> getCard(GetReq req) {
+	public List<Card> getCard(Cookie req) {
 		return service.getCard(req);
 	}
 
@@ -76,8 +77,16 @@ public class ControllerUser {
 	@Path("/getlock")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public Integer getLock(GetReq req) {
+	public Integer getLock(Cookie req) {
 		return service.getLock(req);
+	}
+
+	@POST
+	@Path("/addoperater")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean addOperater(AddOpReq req) {
+		return service.addoperater(req);
 	}
 
 }

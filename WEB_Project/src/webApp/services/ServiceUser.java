@@ -8,7 +8,8 @@ import webApp.dao.DAOUser;
 import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
-import webApp.entities.req.GetReq;
+import webApp.entities.req.AddOpReq;
+import webApp.entities.req.Cookie;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
@@ -25,6 +26,8 @@ public class ServiceUser {
 	}
 
 	public boolean register(User user) {
+		user.isActive = false;
+		user.type = "kupac";
 
 		if (user.username == null || user.username.equals("") || user.password == null || user.password.equals("")
 				|| user.email == null || user.email.equals("") || user.drzava == null || user.drzava.equals("")) {
@@ -68,7 +71,7 @@ public class ServiceUser {
 		return daoCard.addCard(username, req.creditCard);
 	}
 
-	public List<Card> getCard(GetReq req) {
+	public List<Card> getCard(Cookie req) {
 		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return null;
@@ -76,12 +79,30 @@ public class ServiceUser {
 		return daoCard.getCards(username);
 	}
 
-	public Integer getLock(GetReq req) {
+	public Integer getLock(Cookie req) {
 		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return null;
 
 		return dao.getLock(username);
+	}
+
+	public boolean addoperater(AddOpReq req) {
+		User user = daoProvera.getUser(req.cookie);
+		if (user == null || !user.type.equals("admin"))
+			return false;
+
+		User operater = new User();
+		operater.username = req.username;
+		operater.password = req.password;
+		operater.email = req.email;
+		operater.drzava = req.drzava;
+		operater.isActive = false;
+		operater.type = "operater";
+		operater.activationToken = "utilized";
+		operater.optimisticLock = 0;
+
+		return dao.register(operater, "utilized");
 	}
 
 }
