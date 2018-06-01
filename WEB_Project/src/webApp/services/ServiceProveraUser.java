@@ -1,12 +1,12 @@
 package webApp.services;
 
-import webApp.dao.DAOProvera;
+import webApp.dao.DAOProveraUser;
 
-public class ServiceProvera {
+public class ServiceProveraUser {
 
-	DAOProvera dao;
+	DAOProveraUser dao;
 
-	public ServiceProvera(DAOProvera dao) {
+	public ServiceProveraUser(DAOProveraUser dao) {
 		this.dao = dao;
 	}
 

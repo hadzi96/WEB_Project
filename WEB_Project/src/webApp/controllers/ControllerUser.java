@@ -22,7 +22,7 @@ public class ControllerUser {
 	private ServiceUser service;
 
 	public ControllerUser() {
-		this.service = new ServiceUser(new DAOUser());
+		this.service = new ServiceUser();
 	}
 
 	@POST

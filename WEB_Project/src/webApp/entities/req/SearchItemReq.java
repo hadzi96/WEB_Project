@@ -5,9 +5,9 @@ import java.io.Serializable;
 import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
-public class SearchReq extends BasicEntity implements Serializable {
+public class SearchItemReq extends BasicEntity implements Serializable {
 
-	public SearchReq() {
+	public SearchItemReq() {
 		super();
 		this.columnsName.add(COOKIE);
 		this.columnsName.add(OFFSET);

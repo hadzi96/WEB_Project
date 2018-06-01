@@ -12,8 +12,8 @@ import javax.ws.rs.Produces;
 
 import webApp.dao.DAOPhoto;
 import webApp.entities.Photo;
-import webApp.entities.req.OpenReq;
-import webApp.entities.req.SearchReq;
+import webApp.entities.req.OpenItemReq;
+import webApp.entities.req.SearchItemReq;
 import webApp.services.ServicePhoto;
 
 @Stateless
@@ -24,14 +24,14 @@ public class ControllerPhoto {
 	private ServicePhoto service;
 
 	public ControllerPhoto() {
-		this.service = new ServicePhoto(new DAOPhoto());
+		this.service = new ServicePhoto();
 	}
 
 	@POST
 	@Path("/search")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> search(SearchReq parameters) {
+	public List<Photo> search(SearchItemReq parameters) {
 		return service.search(parameters);
 	}
 
@@ -39,7 +39,7 @@ public class ControllerPhoto {
 	@Path("/open")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> open(OpenReq parameters) {
+	public List<Photo> open(OpenItemReq parameters) {
 		return service.open(parameters);
 	}
 

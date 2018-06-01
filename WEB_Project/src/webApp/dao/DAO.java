@@ -15,30 +15,6 @@ public abstract class DAO<T extends BasicEntity> {
 		this.clazz = clazz;
 	}
 
-	public List<T> getAll() {
-		Connection conn = createConnection();
-		if (conn == null) {
-			return null;
-		}
-		try {
-			PreparedStatement st = conn.prepareStatement(String.format("select * from %s", this.clazz.getSimpleName()));
-			ResultSet rs = st.executeQuery();
-			List<T> list = new ArrayList<T>();
-			while (rs.next()) {
-				list.add(readFromResultSet(rs));
-			}
-			closeStat(st);
-			closeResultSet(rs);
-			return list;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			closeConnection(conn);
-		}
-		return null;
-	}
-
 	protected T readFromResultSet(ResultSet rs) {
 		if (rs == null) {
 			return null;
@@ -73,7 +49,8 @@ public abstract class DAO<T extends BasicEntity> {
 			e.printStackTrace();
 		}
 		try {
-			return DriverManager.getConnection("jdbc:mysql://localhost/raf_photoshop?autoReconnect=true&useSSL=false",
+			return DriverManager.getConnection(
+					"jdbc:mysql://localhost/raf_photoshop?autoReconnect=true&useSSL=false&allowMultiQueries=true",
 					USERNAME, PASSWORD);
 		} catch (SQLException e) {
 			// TODO nekim log framework-om ovo bi trebalo da se upisuje u log

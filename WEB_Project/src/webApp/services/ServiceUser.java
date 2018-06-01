@@ -9,8 +9,8 @@ import webApp.utils.UtilsMethods;
 public class ServiceUser {
 	DAOUser dao;
 
-	public ServiceUser(DAOUser dao) {
-		this.dao = dao;
+	public ServiceUser() {
+		this.dao = new DAOUser();
 	}
 
 	public boolean register(User user) {

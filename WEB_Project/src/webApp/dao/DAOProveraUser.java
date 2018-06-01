@@ -7,9 +7,9 @@ import java.sql.SQLException;
 
 import webApp.entities.User;
 
-public class DAOProvera extends DAO<User> {
+public class DAOProveraUser extends DAO<User> {
 
-	public DAOProvera() {
+	public DAOProveraUser() {
 		super(User.class);
 	}
 

@@ -1,18 +1,25 @@
 package webApp.services;
 
+import java.util.List;
+
 import webApp.dao.DAOKorpa;
-import webApp.dao.DAOProvera;
+import webApp.dao.DAOPhoto;
+import webApp.dao.DAOProveraUser;
+import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
+import webApp.entities.req.GetKorpaReq;
 
 public class ServiceKorpa {
 
 	DAOKorpa dao;
-	DAOProvera daoProvera;
+	DAOProveraUser daoProvera;
+	DAOPhoto daoPhoto;
 
-	public ServiceKorpa(DAOKorpa dao) {
-		this.dao = dao;
-		this.daoProvera = new DAOProvera();
+	public ServiceKorpa() {
+		this.dao = new DAOKorpa();
+		this.daoProvera = new DAOProveraUser();
+		this.daoPhoto = new DAOPhoto();
 	}
 
 	public boolean addItem(AddItemReq req) {
@@ -20,12 +27,20 @@ public class ServiceKorpa {
 		if (username == null)
 			return false;
 
-		Photo photo = dao.getPhoto(req.idSlike, req.rezolucija);
+		Photo photo = daoPhoto.getPhoto(req.idSlike, req.rezolucija);
 		if (photo == null)
 			return false;
 
 		// sad mozes da dodas photo u korpu
-		return dao.addItem(username, photo, req.rezolucija);
+		return dao.addItem(username, photo, req.rezolucija, req.optimisticLock);
+	}
+
+	public List<Item> getKorpa(GetKorpaReq req) {
+		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		if (username == null)
+			return null;
+
+		return dao.getKorpa(username);
 	}
 
 }

@@ -4,18 +4,21 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.User;
 import webApp.entities.req.AddItemReq;
 
-public class DAOKorpa extends DAO<Photo> {
+public class DAOKorpa extends DAO<Item> {
 
 	public DAOKorpa() {
-		super(Photo.class);
+		super(Item.class);
 	}
 
-	public boolean addItem(String user, Photo photo, String rezolucija) {
+	public boolean addItem(String user, Photo photo, String rezolucija, int optimisticLock) {
 		Connection conn = createConnection();
 
 		if (conn == null)
@@ -23,8 +26,11 @@ public class DAOKorpa extends DAO<Photo> {
 
 		try {
 			String statement = String.format(
-					"INSERT INTO `korpa` (`user`, `idSlike`, `popust`, `rezolucija`, `optimisticLock`) VALUES ('%s', %d, %b, '%s', 0)",
-					user, photo.id, false, rezolucija);
+					"SET @username := NULL;"
+							+ "SELECT @username := `username` FROM user WHERE username = '%s' AND optimisticLock = %d;"
+							+ "INSERT INTO `korpa` (`user`, `idSlike`, `popust`, `rezolucija`, `optimisticLock`)"
+							+ " VALUES (@username, %d, %b, '%s', 0)",
+					user, optimisticLock, photo.id, false, rezolucija);
 			PreparedStatement st = conn.prepareStatement(statement);
 
 			st.execute();
@@ -40,32 +46,27 @@ public class DAOKorpa extends DAO<Photo> {
 		return false;
 	}
 
-	public Photo getPhoto(int id, String rezolucija) {
+	public List<Item> getKorpa(String username) {
 		Connection conn = createConnection();
-		Photo photo = null;
 
+		List<Item> lista = new ArrayList<>();
 		if (conn == null)
 			return null;
 
 		try {
-			String statement = String.format("SELECT * FROM photo WHERE id = %d", id);
+			String statement = String.format("SELECT * FROM korpa WHERE user = '%s'", username);
 			PreparedStatement st = conn.prepareStatement(statement);
 
 			ResultSet rs = st.executeQuery();
 
-			if (rs.next()) {
-				photo = readFromResultSet(rs);
-				String[] rez = photo.rezolucije.split(",");
-				for (int i = 0; i < rez.length; i++) {
-					if (rez[i].equals(rezolucija))
-						return photo;
-				}
+			while (rs.next()) {
+				lista.add(readFromResultSet(rs));
 			}
 
 			closeStat(st);
 			closeResultSet(rs);
 
-			return null;
+			return lista;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

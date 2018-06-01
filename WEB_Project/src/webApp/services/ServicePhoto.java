@@ -6,27 +6,27 @@ import java.util.List;
 import com.sun.java_cup.internal.runtime.Symbol;
 
 import webApp.dao.DAOPhoto;
-import webApp.dao.DAOProvera;
+import webApp.dao.DAOProveraUser;
 import webApp.entities.Photo;
-import webApp.entities.req.OpenReq;
-import webApp.entities.req.SearchReq;
+import webApp.entities.req.OpenItemReq;
+import webApp.entities.req.SearchItemReq;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {
 	DAOPhoto dao;
-	DAOProvera daoProvera;
+	DAOProveraUser daoProvera;
 	String[] searchO = { "ime", "autor", "kategorija", "keyword" };
 	String[] filterO = { "datumR", "datumS", "brProdajeR", "brProdajeS", "cenaR", "cenaS", "imeR", "imeS", "ocenaR",
 			"ocenaS" };
 	List<String> searchOptions = Arrays.asList(searchO);
 	List<String> filterOptions = Arrays.asList(filterO);
 
-	public ServicePhoto(DAOPhoto dao) {
-		this.dao = dao;
-		this.daoProvera = new DAOProvera();
+	public ServicePhoto() {
+		this.dao = new DAOPhoto();
+		this.daoProvera = new DAOProveraUser();
 	}
 
-	public List<Photo> search(SearchReq parameters) {
+	public List<Photo> search(SearchItemReq parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 
@@ -60,7 +60,7 @@ public class ServicePhoto {
 	}
 
 	// open just one (by id)
-	public List<Photo> open(OpenReq parameters) {
+	public List<Photo> open(OpenItemReq parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 
