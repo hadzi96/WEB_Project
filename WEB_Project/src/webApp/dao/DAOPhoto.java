@@ -79,6 +79,36 @@ public class DAOPhoto extends DAO<Photo> {
 		return null;
 	}
 
+	public Photo getPhoto(int id) {
+		Connection conn = createConnection();
+		Photo photo = null;
+
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format("SELECT * FROM photo WHERE id = %d", id);
+			PreparedStatement st = conn.prepareStatement(statement);
+
+			ResultSet rs = st.executeQuery();
+
+			if (rs.next()) {
+				photo = readFromResultSet(rs);
+			}
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			return photo;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+	}
+
 	public boolean addPhoto(Photo photo) {
 		Connection conn = createConnection();
 

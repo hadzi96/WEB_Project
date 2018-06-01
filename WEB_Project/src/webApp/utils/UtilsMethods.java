@@ -1,6 +1,8 @@
 package webApp.utils;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Random;
 
 import com.google.common.io.Files;
@@ -129,11 +131,21 @@ public final class UtilsMethods {
 
 	static public boolean savePicture(byte[] photo, String name) {
 		try {
-			Files.write(photo, new File("D:/Photos/" + name+ ".png"));
+			Files.write(photo, new File("D:/Photos/" + name + ".png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+
+	static public synchronized byte[] readFile(String filePath) {
+		try {
+			Path path = Paths.get(filePath);
+			return java.nio.file.Files.readAllBytes(path);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

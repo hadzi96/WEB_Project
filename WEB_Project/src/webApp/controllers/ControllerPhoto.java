@@ -1,22 +1,20 @@
 package webApp.controllers;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import webApp.entities.File;
 import webApp.entities.Photo;
-import webApp.entities.req.GetReq;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
 import webApp.services.ServicePhoto;
@@ -60,12 +58,9 @@ public class ControllerPhoto {
 	@Path("/getphoto")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	public Response getFile() {
-		java.io.File file = null;
-		if (file == null)
-			return null;
-		else
-			return Response.ok(file, MediaType.APPLICATION_OCTET_STREAM)
-					.header("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"").build();
+	public String getFile(OpenItemReq parameters) {
+		byte[] file = service.getPhoto(parameters);
+
+		return Base64.getEncoder().encodeToString(file);
 	}
 }

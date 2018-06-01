@@ -82,4 +82,17 @@ public class ServicePhoto {
 
 		return true;
 	}
+
+	public byte[] getPhoto(OpenItemReq parameters) {
+		if (!daoProvera.hasCookie(parameters.cookie))
+			return null;
+
+		Photo photo = dao.getPhoto(parameters.id);
+		if (photo == null)
+			return null;
+
+		String filePath = "D:/Photos/" + photo.fileName + ".png";
+
+		return UtilsMethods.readFile(filePath);
+	}
 }
