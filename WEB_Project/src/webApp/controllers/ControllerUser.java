@@ -15,6 +15,7 @@ import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
+import webApp.entities.req.ChangePWReq;
 import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
 import webApp.responses.LoginResponse;
@@ -89,13 +90,21 @@ public class ControllerUser {
 	public boolean addOperater(AddOpReq req) {
 		return service.addoperater(req);
 	}
-	
+
 	@POST
 	@Path("/deloperater")
 	@Produces("text/json")
 	@Consumes("application/json")
 	public boolean delOperater(DelOpReq req) {
 		return service.deloperater(req);
+	}
+
+	@POST
+	@Path("/changepw")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean changePW(ChangePWReq req) {
+		return service.changePW(req);
 	}
 
 }

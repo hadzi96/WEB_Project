@@ -214,4 +214,27 @@ public class DAOUser extends DAO<User> {
 		return false;
 	}
 
+	public boolean changePW(String username, String newPassword) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return false;
+
+		try {
+			PreparedStatement st = conn.prepareStatement(String.format(
+					"UPDATE user SET password = '%s', isActive = true WHERE username = '%s' AND isActive = false;",
+					newPassword, username));
+
+			st.execute();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
 }

@@ -9,6 +9,7 @@ import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
+import webApp.entities.req.ChangePWReq;
 import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
 import webApp.responses.LoginResponse;
@@ -58,7 +59,17 @@ public class ServiceUser {
 		if (user.username == null || user.username.equals("") || user.password == null || user.password.equals(""))
 			return new LoginResponse(false);
 
-		return this.dao.login(user);
+		LoginResponse res = dao.login(user);
+		if (res.success)
+			return res;
+		User operater = daoProvera.getUser(user.username, user.password);
+		if (operater == null)
+			return res;
+		if (operater.type.equals("operater") && operater.isActive == false) {
+			res.message = "changePW";
+		}
+
+		return res;
 	}
 
 	public boolean addCard(AddCardReq req) {
@@ -112,6 +123,18 @@ public class ServiceUser {
 			return false;
 
 		return dao.deleteUser(req.username);
+	}
+
+	public boolean changePW(ChangePWReq req) {
+		User user = daoProvera.getUser(req.username, req.password);
+
+		if (user == null)
+			return false;
+
+		if (!user.type.equals("operater"))
+			return false;
+
+		return dao.changePW(user.username, req.newpassword);
 	}
 
 }

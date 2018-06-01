@@ -100,4 +100,32 @@ public class DAOProveraUser extends DAO<User> {
 		}
 	}
 
+	public User getUser(String username, String password) {
+		deleteOldCookies();
+		Connection conn = createConnection();
+		User user = null;
+
+		if (conn == null)
+			return null;
+
+		try {
+			PreparedStatement st = conn.prepareStatement(
+					String.format("SELECT * FROM user WHERE username = '%s' AND password = '%s'", username, password));
+
+			ResultSet rs = st.executeQuery();
+			if (rs.next())
+				user = readFromResultSet(rs);
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			return user;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+		return null;
+	}
+
 }
