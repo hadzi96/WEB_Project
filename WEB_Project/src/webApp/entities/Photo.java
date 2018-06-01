@@ -21,6 +21,7 @@ public class Photo extends BasicEntity implements Serializable {
 		this.columnsName.add(OCENA);
 		this.columnsName.add(ON_SALE);
 		this.columnsName.add(REZOLUCIJE);
+		this.columnsName.add(FILE_NAME);
 		this.columnsName.add(OPTIMISTIC_LOCK);
 	}
 
@@ -79,6 +80,10 @@ public class Photo extends BasicEntity implements Serializable {
 			this.rezolucije = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
+		if (FILE_NAME.equals(columnName)) {
+			this.fileName = UtilsMethods.saftyConversionToStr(value);
+			return;
+		}
 
 	}
 
@@ -125,6 +130,9 @@ public class Photo extends BasicEntity implements Serializable {
 		if (REZOLUCIJE.equals(columnName)) {
 			return this.rezolucije;
 		}
+		if (FILE_NAME.equals(columnName)) {
+			return this.fileName;
+		}
 
 		return null;
 	}
@@ -143,6 +151,7 @@ public class Photo extends BasicEntity implements Serializable {
 	public String ocena;
 	public boolean onSale;
 	public String rezolucije;
+	public String fileName;
 	public int optimisticLock;
 
 	// constants
@@ -158,5 +167,7 @@ public class Photo extends BasicEntity implements Serializable {
 	public static final String OCENA = "ocena";
 	public static final String ON_SALE = "onSale";
 	public static final String REZOLUCIJE = "rezolucije";
+	public static final String FILE_NAME = "fileName";
 	public static final String OPTIMISTIC_LOCK = "optimisticLock";
+
 }

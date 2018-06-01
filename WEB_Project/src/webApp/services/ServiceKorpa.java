@@ -24,7 +24,7 @@ public class ServiceKorpa {
 	}
 
 	public boolean addItem(AddItemReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return false;
 
@@ -37,7 +37,7 @@ public class ServiceKorpa {
 	}
 
 	public List<Item> getKorpa(GetReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return null;
 
@@ -45,7 +45,7 @@ public class ServiceKorpa {
 	}
 
 	public boolean buy(BuyReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return false;
 
@@ -54,6 +54,7 @@ public class ServiceKorpa {
 		}
 
 		// ovde (saljeno slike na email)
+		// obavestavamo prodavca o kupovini
 		return dao.buy(username, req.optimisticLock);
 	}
 

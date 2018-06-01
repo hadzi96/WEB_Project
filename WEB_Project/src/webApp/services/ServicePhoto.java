@@ -3,11 +3,11 @@ package webApp.services;
 import java.util.Arrays;
 import java.util.List;
 
-import com.sun.java_cup.internal.runtime.Symbol;
-
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProveraUser;
+import webApp.entities.File;
 import webApp.entities.Photo;
+import webApp.entities.User;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
 import webApp.utils.UtilsMethods;
@@ -65,5 +65,21 @@ public class ServicePhoto {
 			return null;
 
 		return dao.search(UtilsMethods.openStatement(parameters.id));
+	}
+
+	public boolean send(File file) {
+		User user = daoProvera.getUser(file.cookie);
+		if (user == null)
+			return false;
+
+		file.photo.autor = user.username;
+		file.photo.brProdaje = 0;
+
+		String fileName = user.username + file.photo.ime + System.currentTimeMillis() / 1000;
+		UtilsMethods.savePicture(file.getData(), fileName);
+		file.photo.fileName = fileName;
+		dao.addPhoto(file.photo);
+
+		return true;
 	}
 }

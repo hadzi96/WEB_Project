@@ -1,6 +1,9 @@
 package webApp.utils;
 
+import java.io.File;
 import java.util.Random;
+
+import com.google.common.io.Files;
 
 /**
  * Klasa sa pomocnim metodam
@@ -25,7 +28,7 @@ public final class UtilsMethods {
 		}
 		return id;
 	}
-	
+
 	public static long saftyConversionLong(Object o) {
 		long id = 0;
 		try {
@@ -122,5 +125,15 @@ public final class UtilsMethods {
 
 	static public String openStatement(int id) {
 		return String.format("SELECT * FROM photo WHERE onSale = true AND id = %d", id);
+	}
+
+	static public boolean savePicture(byte[] photo, String name) {
+		try {
+			Files.write(photo, new File("D:/Photos/" + name+ ".png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 }

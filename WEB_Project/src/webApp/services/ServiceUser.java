@@ -58,7 +58,7 @@ public class ServiceUser {
 	}
 
 	public boolean addCard(AddCardReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return false;
 		if (req.creditCard < 1000000000000000L || req.creditCard > 9999999999999999L) {
@@ -69,7 +69,7 @@ public class ServiceUser {
 	}
 
 	public List<Card> getCard(GetReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return null;
 
@@ -77,7 +77,7 @@ public class ServiceUser {
 	}
 
 	public Integer getLock(GetReq req) {
-		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		String username = daoProvera.getUser(req.cookie).username;
 		if (username == null)
 			return null;
 

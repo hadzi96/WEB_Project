@@ -42,13 +42,14 @@ public class DAOProveraUser extends DAO<User> {
 		return false;
 	}
 
-	public String getUsernamefromCookie(String cookie) {
+	public User getUser(String cookie) {
 		deleteOldCookies();
 		Connection conn = createConnection();
 		String username = null;
+		User user = null;
 
 		if (conn == null)
-			return username;
+			return null;
 
 		try {
 			PreparedStatement st = conn
@@ -62,13 +63,23 @@ public class DAOProveraUser extends DAO<User> {
 			closeStat(st);
 			closeResultSet(rs);
 
-			return username;
+			st = conn.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s'", username));
+
+			rs = st.executeQuery();
+
+			if (rs.next())
+				user = readFromResultSet(rs);
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			return user;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			closeConnection(conn);
 		}
-		return username;
+		return null;
 	}
 
 	public void deleteOldCookies() {
