@@ -10,6 +10,7 @@ import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
 import webApp.entities.req.Cookie;
+import webApp.entities.req.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
@@ -103,6 +104,14 @@ public class ServiceUser {
 		operater.optimisticLock = 0;
 
 		return dao.register(operater, "utilized");
+	}
+
+	public boolean deloperater(DelOpReq req) {
+		User user = daoProvera.getUser(req.cookie);
+		if (user == null || !user.type.equals("admin"))
+			return false;
+
+		return dao.deleteUser(req.username);
 	}
 
 }

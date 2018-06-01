@@ -192,4 +192,26 @@ public class DAOUser extends DAO<User> {
 		return null;
 	}
 
+	public boolean deleteUser(String username) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return false;
+
+		try {
+			PreparedStatement st = conn
+					.prepareStatement(String.format("DELETE FROM user WHERE username = '%s'", username));
+
+			st.execute();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
 }
