@@ -8,9 +8,9 @@ import javax.servlet.http.Cookie;
 import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
-public class GetKorpaReq extends BasicEntity implements Serializable {
+public class GetReq extends BasicEntity implements Serializable {
 
-	public GetKorpaReq() {
+	public GetReq() {
 		super();
 		this.columnsName.add(COOKIE);
 	}

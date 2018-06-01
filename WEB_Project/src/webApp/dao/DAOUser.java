@@ -164,4 +164,32 @@ public class DAOUser extends DAO<User> {
 		return new LoginResponse(false);
 	}
 
+	public Integer getLock(String username) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return null;
+
+		try {
+			PreparedStatement st = conn.prepareStatement(String.format("SELECT * FROM %s WHERE %s = \"%s\"",
+					this.clazz.getSimpleName(), User.USERNAME, username));
+
+			ResultSet rs = st.executeQuery();
+
+			Integer lock = null;
+			if (rs.next())
+				lock = rs.getInt(8);
+
+			closeStat(st);
+			closeResultSet(rs);
+
+			return lock;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+		return null;
+	}
+
 }

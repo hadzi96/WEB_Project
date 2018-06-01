@@ -8,7 +8,7 @@ import webApp.dao.DAOUser;
 import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
-import webApp.entities.req.GetCardReq;
+import webApp.entities.req.GetReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
@@ -68,12 +68,20 @@ public class ServiceUser {
 		return daoCard.addCard(username, req.creditCard);
 	}
 
-	public List<Card> getCard(GetCardReq req) {
+	public List<Card> getCard(GetReq req) {
 		String username = daoProvera.getUsernamefromCookie(req.cookie);
 		if (username == null)
 			return null;
 
 		return daoCard.getCards(username);
+	}
+
+	public Integer getLock(GetReq req) {
+		String username = daoProvera.getUsernamefromCookie(req.cookie);
+		if (username == null)
+			return null;
+
+		return dao.getLock(username);
 	}
 
 }

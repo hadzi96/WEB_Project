@@ -9,7 +9,7 @@ import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
 import webApp.entities.req.BuyReq;
-import webApp.entities.req.GetKorpaReq;
+import webApp.entities.req.GetReq;
 
 public class ServiceKorpa {
 
@@ -36,7 +36,7 @@ public class ServiceKorpa {
 		return dao.addItem(username, photo, req.rezolucija, req.optimisticLock);
 	}
 
-	public List<Item> getKorpa(GetKorpaReq req) {
+	public List<Item> getKorpa(GetReq req) {
 		String username = daoProvera.getUsernamefromCookie(req.cookie);
 		if (username == null)
 			return null;
