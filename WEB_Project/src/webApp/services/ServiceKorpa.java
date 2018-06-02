@@ -1,5 +1,6 @@
 package webApp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import webApp.dao.DAOKorpa;
@@ -10,6 +11,7 @@ import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
 import webApp.entities.req.BuyReq;
 import webApp.entities.req.Cookie;
+import webApp.utils.EmailSender;
 
 public class ServiceKorpa {
 
@@ -68,9 +70,30 @@ public class ServiceKorpa {
 			return false;
 		}
 
+		List<Item> items = dao.getKorpa(username);
+		List<String> sellerEmal = new ArrayList<>();
+		List<String> itemName = new ArrayList<>();
+		List<String> itemResolution = new ArrayList<>();
+
+		for (Item i : items) {
+			Photo photo = daoPhoto.getPhoto(i.idSlike, i.rezolucija);
+			String autor = photo.autor;
+			String email = daoProvera.getUserbyName(autor).email;
+			sellerEmal.add(email);
+			itemName.add(photo.ime);
+			itemResolution.add(i.rezolucija);
+		}
+
+		if (dao.buy(username, req.optimisticLock) == false)
+			return false;
+
 		// ovde (saljeno slike na email)
-		// obavestavamo prodavca o kupovini
-		return dao.buy(username, req.optimisticLock);
+		for (int i = 0; i < sellerEmal.size(); i++) {
+			System.out.println(sellerEmal.get(i));
+			EmailSender.informSeller(sellerEmal.get(i), itemName.get(i), itemResolution.get(i));
+		}
+
+		return true;
 	}
 
 }
