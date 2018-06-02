@@ -15,6 +15,7 @@ import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
+import webApp.entities.req.BlockReq;
 import webApp.entities.req.ChangePWReq;
 import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
@@ -105,6 +106,14 @@ public class ControllerUser {
 	@Consumes("application/json")
 	public boolean changePW(ChangePWReq req) {
 		return service.changePW(req);
+	}
+
+	@POST
+	@Path("/block")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean block(BlockReq req) {
+		return service.block(req);
 	}
 
 }

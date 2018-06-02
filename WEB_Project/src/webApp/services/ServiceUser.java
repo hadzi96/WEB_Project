@@ -9,6 +9,7 @@ import webApp.entities.Card;
 import webApp.entities.User;
 import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
+import webApp.entities.req.BlockReq;
 import webApp.entities.req.ChangePWReq;
 import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
@@ -135,6 +136,17 @@ public class ServiceUser {
 			return false;
 
 		return dao.changePW(user.username, req.newpassword);
+	}
+
+	public boolean block(BlockReq req) {
+		User user = daoProvera.getUser(req.cookie);
+		if (user == null)
+			return false;
+
+		if (!user.type.equals("operater"))
+			return false;
+
+		return dao.block(req.username);
 	}
 
 }

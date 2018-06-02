@@ -14,6 +14,7 @@ public class Item extends BasicEntity implements Serializable {
 		this.columnsName.add(ID_SLIKE);
 		this.columnsName.add(POPUST);
 		this.columnsName.add(REZOLUCIJA);
+		this.columnsName.add(CENA);
 		this.columnsName.add(OPTIMISTIC_LOCK);
 	}
 
@@ -44,6 +45,10 @@ public class Item extends BasicEntity implements Serializable {
 			this.rezolucija = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
+		if (CENA.equals(columnName)) {
+			this.cena = UtilsMethods.saftyConversionDouble(value);
+			return;
+		}
 
 	}
 
@@ -69,6 +74,9 @@ public class Item extends BasicEntity implements Serializable {
 		if (REZOLUCIJA.equals(columnName)) {
 			return this.rezolucija;
 		}
+		if (CENA.equals(columnName)) {
+			return this.cena;
+		}
 
 		return null;
 	}
@@ -80,6 +88,7 @@ public class Item extends BasicEntity implements Serializable {
 	public int idSlike;
 	public boolean popust;
 	public String rezolucija;
+	public double cena;
 	public int optimisticLock;
 
 	// constants
@@ -88,5 +97,6 @@ public class Item extends BasicEntity implements Serializable {
 	public static final String ID_SLIKE = "idSlike";
 	public static final String POPUST = "popust";
 	public static final String REZOLUCIJA = "rezolucija";
+	public static final String CENA = "cena";
 	public static final String OPTIMISTIC_LOCK = "optimisticLock";
 }

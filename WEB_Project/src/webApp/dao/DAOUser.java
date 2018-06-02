@@ -237,4 +237,27 @@ public class DAOUser extends DAO<User> {
 		return false;
 	}
 
+	public boolean block(String username) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format(
+					"UPDATE user SET isActive = false WHERE username = '%s' AND type != 'admin' AND type != 'operater';",
+					username);
+			PreparedStatement st = conn.prepareStatement(statement);
+
+			st.execute();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
 }

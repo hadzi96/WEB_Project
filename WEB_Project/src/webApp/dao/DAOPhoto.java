@@ -59,7 +59,7 @@ public class DAOPhoto extends DAO<Photo> {
 
 			if (rs.next()) {
 				photo = readFromResultSet(rs);
-				String[] rez = photo.rezolucije.split(",");
+				String[] rez = photo.rezolucije.split(";");
 				for (int i = 0; i < rez.length; i++) {
 					if (rez[i].equals(rezolucija))
 						return photo;
@@ -117,10 +117,10 @@ public class DAOPhoto extends DAO<Photo> {
 
 		try {
 			String statement = String.format(
-					"INSERT INTO `photo` (`ime`, `autor`, `kategorija`, `keyword`, `datum`, `brProdaje`, `cena`, `opis`, `ocena`, `onSale`,`rezolucije`,`fileName`, `optimisticLock`) VALUES\r\n"
-							+ "('%s', '%s', '%s', '%s', now(), 0, %13.2f, '%s', '1', false, '%s','%s',0);",
-					photo.ime, photo.autor, photo.kategorija, photo.keyword, photo.cena, photo.opis, photo.rezolucije,
-					photo.fileName);
+					"INSERT INTO `photo` (`ime`, `autor`, `kategorija`, `keyword`, `datum`, `mesto`, `brProdaje`, `cene`, `opis`, `ocena`, `onSale`,`rezolucije`,`fileName`, `optimisticLock`) VALUES\r\n"
+							+ "('%s', '%s', '%s', '%s', now(), '%s', 0, '%s', '%s', '1', false, '%s','%s',0);",
+					photo.ime, photo.autor, photo.kategorija, photo.keyword, photo.mesto, photo.cene, photo.opis,
+					photo.rezolucije, photo.fileName);
 			PreparedStatement st = conn.prepareStatement(statement);
 
 			st.execute();

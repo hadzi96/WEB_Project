@@ -18,19 +18,17 @@ public class DAOKorpa extends DAO<Item> {
 		super(Item.class);
 	}
 
-	public boolean addItem(String user, Photo photo, String rezolucija, int optimisticLock) {
+	public boolean addItem(String user, Photo photo, String rezolucija, double cena) {
 		Connection conn = createConnection();
 
 		if (conn == null)
 			return false;
 
 		try {
-			String statement = String.format(
-					"SET @username := NULL;"
-							+ "SELECT @username := `username` FROM user WHERE username = '%s' AND optimisticLock = %d;"
-							+ "INSERT INTO `korpa` (`user`, `idSlike`, `popust`, `rezolucija`, `optimisticLock`)"
-							+ " VALUES (@username, %d, %b, '%s', 0)",
-					user, optimisticLock, photo.id, false, rezolucija);
+			String statement = String.format("SET @username := NULL;"
+					+ "SELECT @username := `username` FROM user WHERE username = '%s';"
+					+ "INSERT INTO `korpa` (`user`, `idSlike`, `popust`, `rezolucija`, `cena`, `optimisticLock`)"
+					+ " VALUES (@username, %d, %b, '%s', %13.2f, 0)", user, photo.id, false, rezolucija, cena);
 			PreparedStatement st = conn.prepareStatement(statement);
 
 			st.execute();
@@ -93,8 +91,9 @@ public class DAOKorpa extends DAO<Item> {
 			for (Item i : items) {
 				String statement = String.format("SET @username := NULL;"
 						+ "SELECT @username := `username` FROM user WHERE username = '%s' AND optimisticLock = %d;"
-						+ "INSERT INTO `kupljene` (`idSlike`, `buyer`, `autor`)" + " VALUES (%d, @username, '%s')",
-						user, optimisticLock, i.idSlike, autors.get(items.indexOf(i)));
+						+ "INSERT INTO `kupljene` (`idSlike`, `buyer`, `autor`, `rezolucija`, `cena`)"
+						+ " VALUES (%d, @username, '%s', '%s', %13.2f)", user, optimisticLock, i.idSlike,
+						autors.get(items.indexOf(i)), i.rezolucija, i.cena);
 				PreparedStatement st = conn.prepareStatement(statement);
 
 				st.execute();

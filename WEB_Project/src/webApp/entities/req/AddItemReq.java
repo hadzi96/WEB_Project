@@ -15,7 +15,6 @@ public class AddItemReq extends BasicEntity implements Serializable {
 		this.columnsName.add(COOKIE); // cookie od usera kome dodajemo
 		this.columnsName.add(ID_SLIKE);
 		this.columnsName.add(REZOLUCIJA);
-		this.columnsName.add(USER_LOCK);
 	}
 
 	@Override
@@ -31,10 +30,6 @@ public class AddItemReq extends BasicEntity implements Serializable {
 		}
 		if (REZOLUCIJA.equals(columnName)) {
 			this.rezolucija = UtilsMethods.saftyConversionToStr(value);
-			return;
-		}
-		if (USER_LOCK.equals(columnName)) {
-			this.optimisticLock = UtilsMethods.saftyConversionInt(value);
 			return;
 		}
 
@@ -55,9 +50,6 @@ public class AddItemReq extends BasicEntity implements Serializable {
 			return this.rezolucija;
 		}
 
-		if (USER_LOCK.equals(columnName)) {
-			return this.optimisticLock;
-		}
 
 		return null;
 	}
@@ -68,11 +60,9 @@ public class AddItemReq extends BasicEntity implements Serializable {
 	public int idSlike;
 	public double cena;
 	public String rezolucija;
-	public int optimisticLock;
 
 	// constants
 	public static final String COOKIE = "cookie";
 	public static final String ID_SLIKE = "idSlike";
 	public static final String REZOLUCIJA = "rezolucija";
-	public static final String USER_LOCK = "optimisticLock";
 }

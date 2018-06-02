@@ -32,8 +32,20 @@ public class ServiceKorpa {
 		if (photo == null)
 			return false;
 
+		Double cena = null;
+		String[] rez = photo.rezolucije.split(";");
+		String[] cene = photo.cene.split(";");
+		for (int i = 0; i < rez.length; i++) {
+			if (rez[i].equals(req.rezolucija)) {
+				cena = Double.parseDouble(cene[i]);
+			}
+		}
+
+		if (cena == null)
+			return false;
+
 		// sad mozes da dodas photo u korpu
-		return dao.addItem(username, photo, req.rezolucija, req.optimisticLock);
+		return dao.addItem(username, photo, req.rezolucija, cena);
 	}
 
 	public List<Item> getKorpa(Cookie req) {

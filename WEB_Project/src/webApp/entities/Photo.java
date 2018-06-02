@@ -15,8 +15,9 @@ public class Photo extends BasicEntity implements Serializable {
 		this.columnsName.add(KATEGORIJA);
 		this.columnsName.add(KEYWORD);
 		this.columnsName.add(DATUM);
+		this.columnsName.add(MESTO);
 		this.columnsName.add(BR_PRODAJE);
-		this.columnsName.add(CENA);
+		this.columnsName.add(CENE);
 		this.columnsName.add(OPIS);
 		this.columnsName.add(OCENA);
 		this.columnsName.add(ON_SALE);
@@ -56,12 +57,16 @@ public class Photo extends BasicEntity implements Serializable {
 			this.datum = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
+		if (MESTO.equals(columnName)) {
+			this.mesto = UtilsMethods.saftyConversionToStr(value);
+			return;
+		}
 		if (BR_PRODAJE.equals(columnName)) {
 			this.brProdaje = UtilsMethods.saftyConversionInt(value);
 			return;
 		}
-		if (CENA.equals(columnName)) {
-			this.cena = UtilsMethods.saftyConversionDouble(value);
+		if (CENE.equals(columnName)) {
+			this.cene = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
 		if (OPIS.equals(columnName)) {
@@ -112,11 +117,14 @@ public class Photo extends BasicEntity implements Serializable {
 		if (DATUM.equals(columnName)) {
 			return this.datum;
 		}
+		if (MESTO.equals(columnName)) {
+			return this.mesto;
+		}
 		if (BR_PRODAJE.equals(columnName)) {
 			return this.brProdaje;
 		}
-		if (CENA.equals(columnName)) {
-			return this.cena;
+		if (CENE.equals(columnName)) {
+			return this.cene;
 		}
 		if (OPIS.equals(columnName)) {
 			return this.opis;
@@ -145,8 +153,9 @@ public class Photo extends BasicEntity implements Serializable {
 	public String kategorija;
 	public String keyword;
 	public String datum;
+	public String mesto;
 	public int brProdaje;
-	public double cena;
+	public String cene;
 	public String opis;
 	public String ocena;
 	public boolean onSale;
@@ -161,8 +170,9 @@ public class Photo extends BasicEntity implements Serializable {
 	public static final String KATEGORIJA = "kategorija";
 	public static final String KEYWORD = "keyword";
 	public static final String DATUM = "datum";
+	public static final String MESTO = "mesto";
 	public static final String BR_PRODAJE = "brProdaje";
-	public static final String CENA = "cena";
+	public static final String CENE = "cene";
 	public static final String OPIS = "opis";
 	public static final String OCENA = "ocena";
 	public static final String ON_SALE = "onSale";

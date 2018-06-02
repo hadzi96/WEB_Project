@@ -148,4 +148,38 @@ public final class UtilsMethods {
 			return null;
 		}
 	}
+
+	static public boolean checkCeneAndRez(String c, String r) {
+		String[] rezolucije = r.split(";");
+		String[] cene = c.split(";");
+
+		if (rezolucije.length != cene.length) {
+			System.out.println("cena and resolution length missmatch");
+			return false;
+		}
+
+		for (String rez : rezolucije) {
+			if (!regexMatcher("[0-9]*x[0-9]*$", rez)) {
+				System.out.println("rezolution does not match regex");
+				return false;
+			}
+		}
+		for (String cen : cene) {
+			try {
+				Double.parseDouble(cen);
+			} catch (Exception e) {
+				System.out.println("cenea not double");
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	static public boolean regexMatcher(String patern, String value) {
+		java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(patern);
+		java.util.regex.Matcher matcher = pattern.matcher(value);
+
+		return matcher.matches();
+	}
 }

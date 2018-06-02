@@ -16,7 +16,7 @@ public class ServicePhoto {
 	DAOPhoto dao;
 	DAOProveraUser daoProvera;
 	String[] searchO = { "ime", "autor", "kategorija", "keyword" };
-	String[] filterO = { "datumR", "datumS", "brProdajeR", "brProdajeS", "cenaR", "cenaS", "imeR", "imeS", "ocenaR",
+	String[] filterO = { "datumR", "datumS", "brProdajeR", "brProdajeS", "ceneR", "ceneS", "imeR", "imeS", "ocenaR",
 			"ocenaS" };
 	List<String> searchOptions = Arrays.asList(searchO);
 	List<String> filterOptions = Arrays.asList(filterO);
@@ -60,17 +60,21 @@ public class ServicePhoto {
 	}
 
 	// open just one (by id)
-	public List<Photo> open(OpenItemReq parameters) {
+	public Photo open(OpenItemReq parameters) {
 		if (!daoProvera.hasCookie(parameters.cookie))
 			return null;
 
-		return dao.search(UtilsMethods.openStatement(parameters.id));
+		return dao.search(UtilsMethods.openStatement(parameters.id)).get(0);
 	}
 
 	public boolean send(File file) {
 		User user = daoProvera.getUser(file.cookie);
 		if (user == null)
 			return false;
+
+		if (UtilsMethods.checkCeneAndRez(file.photo.cene, file.photo.rezolucije) == false) {
+			return false;
+		}
 
 		file.photo.autor = user.username;
 		file.photo.brProdaje = 0;

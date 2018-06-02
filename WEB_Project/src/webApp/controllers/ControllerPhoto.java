@@ -17,6 +17,7 @@ import webApp.entities.File;
 import webApp.entities.Photo;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
+import webApp.responses.OpenResponse;
 import webApp.services.ServicePhoto;
 
 @Stateless
@@ -42,8 +43,9 @@ public class ControllerPhoto {
 	@Path("/open")
 	@Consumes("application/json")
 	@Produces("text/json")
-	public List<Photo> open(OpenItemReq parameters) {
-		return service.open(parameters);
+	public OpenResponse open(OpenItemReq parameters) {
+		Photo photo = service.open(parameters);
+		return new OpenResponse(photo.id, photo.mesto, photo.rezolucije, photo.cene, photo.opis, photo.ocena);
 	}
 
 	@POST
