@@ -67,8 +67,8 @@ public class EmailSender {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(hostMail));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-			message.setSubject("E-mail verification");
-			message.setText("Image SOLD\n" + "name: " + imageName + "\nresolution [" + imageResolution + "]");
+			message.setSubject("Item sold");
+			message.setText("Image sold\n" + "name: " + imageName + "\nresolution [" + imageResolution + "]");
 
 			Transport.send(message);
 
