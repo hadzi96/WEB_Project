@@ -32,6 +32,9 @@ public class ServiceKorpa {
 		if (photo == null)
 			return false;
 
+		if (photo.onSale == false)
+			return false;
+
 		Double cena = null;
 		String[] rez = photo.rezolucije.split(";");
 		String[] cene = photo.cene.split(";");

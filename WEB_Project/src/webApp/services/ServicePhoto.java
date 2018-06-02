@@ -78,6 +78,18 @@ public class ServicePhoto {
 			return false;
 		}
 
+		List<Photo> today = dao.getPhotosFromToday(user.username);
+		if (today != null) {
+			if (today.size() >= 3)
+				return false;
+		}
+
+		List<Photo> week = dao.getPhotosFromWeek(user.username);
+		if (week != null) {
+			if (week.size() >= 8)
+				return false;
+		}
+
 		file.photo.autor = user.username;
 		file.photo.brProdaje = 0;
 

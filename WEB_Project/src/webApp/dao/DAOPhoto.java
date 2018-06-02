@@ -182,4 +182,58 @@ public class DAOPhoto extends DAO<Photo> {
 		return false;
 	}
 
+	public List<Photo> getPhotosFromToday(String autor) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format(
+					"SELECT * FROM photo WHERE autor = '%s' AND datum > DATE_SUB(NOW(), INTERVAL 1 DAY);", autor);
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+			ArrayList<Photo> list = new ArrayList<Photo>();
+			while (rs.next()) {
+				list.add(readFromResultSet(rs));
+			}
+			closeStat(st);
+			closeResultSet(rs);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+
+	}
+	
+	public List<Photo> getPhotosFromWeek(String autor) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format(
+					"SELECT * FROM photo WHERE autor = '%s' AND datum > DATE_SUB(NOW(), INTERVAL 1 WEEK);", autor);
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+			ArrayList<Photo> list = new ArrayList<Photo>();
+			while (rs.next()) {
+				list.add(readFromResultSet(rs));
+			}
+			closeStat(st);
+			closeResultSet(rs);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+
+	}
+
 }
