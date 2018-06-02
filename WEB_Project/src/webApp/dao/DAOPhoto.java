@@ -136,4 +136,50 @@ public class DAOPhoto extends DAO<Photo> {
 		return false;
 	}
 
+	public ArrayList<Photo> getNeodobrene() {
+		Connection conn = createConnection();
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format("SELECT * FROM photo WHERE onSale = false;");
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+			ArrayList<Photo> list = new ArrayList<Photo>();
+			while (rs.next()) {
+				list.add(readFromResultSet(rs));
+			}
+			closeStat(st);
+			closeResultSet(rs);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+	}
+
+	public boolean odobri(int id) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format("UPDATE photo SET onSale = true WHERE id = %d", id);
+			PreparedStatement st = conn.prepareStatement(statement);
+			st.execute();
+
+			closeStat(st);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
 }

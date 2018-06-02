@@ -8,6 +8,8 @@ import webApp.dao.DAOProveraUser;
 import webApp.entities.File;
 import webApp.entities.Photo;
 import webApp.entities.User;
+import webApp.entities.req.Cookie;
+import webApp.entities.req.OdobriReq;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
 import webApp.utils.UtilsMethods;
@@ -98,5 +100,27 @@ public class ServicePhoto {
 		String filePath = "D:/Photos/" + photo.fileName + ".png";
 
 		return UtilsMethods.readFile(filePath);
+	}
+
+	public List<Photo> getNeodobrene(Cookie req) {
+		User user = daoProvera.getUser(req.cookie);
+		if (user == null)
+			return null;
+
+		if (!user.type.equals("operater"))
+			return null;
+
+		return dao.getNeodobrene();
+	}
+
+	public boolean odobri(OdobriReq req) {
+		User user = daoProvera.getUser(req.cookie);
+		if (user == null)
+			return false;
+
+		if (!user.type.equals("operater"))
+			return false;
+
+		return dao.odobri(req.id);
 	}
 }

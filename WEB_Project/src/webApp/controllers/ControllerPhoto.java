@@ -15,6 +15,8 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import webApp.entities.File;
 import webApp.entities.Photo;
+import webApp.entities.req.Cookie;
+import webApp.entities.req.OdobriReq;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
 import webApp.responses.OpenResponse;
@@ -64,5 +66,21 @@ public class ControllerPhoto {
 		byte[] file = service.getPhoto(parameters);
 
 		return Base64.getEncoder().encodeToString(file);
+	}
+
+	@POST
+	@Path("/getneodobrene")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public List<Photo> getNeodobrene(Cookie req) {
+		return service.getNeodobrene(req);
+	}
+
+	@POST
+	@Path("/odobri")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean odobri(OdobriReq req) {
+		return service.odobri(req);
 	}
 }
