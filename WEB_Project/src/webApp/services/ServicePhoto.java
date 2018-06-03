@@ -1,7 +1,11 @@
 package webApp.services;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProveraUser;
@@ -28,8 +32,10 @@ public class ServicePhoto {
 	}
 
 	public List<Photo> search(SearchItemReq parameters, String cookie) {
-		if (!daoProvera.hasCookie(cookie))
+		if (!daoProvera.hasCookie(cookie)) {
+			System.out.println("HELO???" + cookie);
 			return null;
+		}
 
 		int offst = UtilsMethods.saftyConversionInt(parameters.offset);
 
@@ -69,35 +75,47 @@ public class ServicePhoto {
 	}
 
 	public boolean send(File file, String cookie) {
-		User user = daoProvera.getUser(cookie);
-		if (user == null)
-			return false;
-
-		if (UtilsMethods.checkCeneAndRez(file.photo.cene, file.photo.rezolucije) == false) {
-			return false;
-		}
-
-		List<Photo> today = dao.getPhotosFromToday(user.username);
-		if (today != null) {
-			if (today.size() >= 3)
+		try {
+			User user = daoProvera.getUser(cookie);
+			if (user == null)
 				return false;
-		}
 
-		List<Photo> week = dao.getPhotosFromWeek(user.username);
-		if (week != null) {
-			if (week.size() >= 8)
+			if (!user.type.equals("prodavac"))
 				return false;
+
+			if (UtilsMethods.checkCeneAndRez(file.photo.cene, file.photo.rezolucije) == false) {
+				return false;
+			}
+
+			List<Photo> today = dao.getPhotosFromToday(user.username);
+			if (today != null) {
+				if (today.size() >= 3)
+					return false;
+			}
+
+			List<Photo> week = dao.getPhotosFromWeek(user.username);
+			if (week != null) {
+				if (week.size() >= 8)
+					return false;
+			}
+
+			file.photo.autor = user.username;
+			file.photo.brProdaje = 0;
+
+			// proveri dal je dovoljno velika slika za date rezolucije
+			if (UtilsMethods.checkResolutions(file) == false)
+				return false;
+
+			String fileName = user.username + file.photo.ime + System.currentTimeMillis() / 1000;
+			UtilsMethods.savePicture(file.getData(), fileName);
+			file.photo.fileName = fileName;
+			dao.addPhoto(file.photo);
+
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-
-		file.photo.autor = user.username;
-		file.photo.brProdaje = 0;
-
-		String fileName = user.username + file.photo.ime + System.currentTimeMillis() / 1000;
-		UtilsMethods.savePicture(file.getData(), fileName);
-		file.photo.fileName = fileName;
-		dao.addPhoto(file.photo);
-
-		return true;
 	}
 
 	public byte[] getPhoto(OpenItemReq parameters, String cookie) {
@@ -109,8 +127,12 @@ public class ServicePhoto {
 			return null;
 
 		String filePath = "D:/Photos/" + photo.fileName + ".png";
+		byte[] img = UtilsMethods.readFile(filePath);
 
-		return UtilsMethods.readFile(filePath);
+		// konvertuj u malu rezoluciju pre nego sto posaljes
+		img = UtilsMethods.scaleImage(img, 100, 100);
+
+		return img;
 	}
 
 	public List<Photo> getNeodobrene(String cookie) {

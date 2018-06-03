@@ -1,11 +1,18 @@
 package webApp.utils;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
+
 import com.google.common.io.Files;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 /**
  * Klasa sa pomocnim metodam
@@ -129,7 +136,7 @@ public final class UtilsMethods {
 		return String.format("SELECT * FROM photo WHERE onSale = true AND id = %d", id);
 	}
 
-	static public boolean savePicture(byte[] photo, String name) {
+	static public synchronized boolean savePicture(byte[] photo, String name) {
 		try {
 			Files.write(photo, new File("D:/Photos/" + name + ".png"));
 		} catch (Exception e) {
@@ -181,5 +188,58 @@ public final class UtilsMethods {
 		java.util.regex.Matcher matcher = pattern.matcher(value);
 
 		return matcher.matches();
+	}
+
+	static public boolean saveTestPhoto(byte[] photo, String name) {
+		try {
+			Files.write(photo, new File("D:/Tests/" + name + ".png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
+	static public boolean checkResolutions(webApp.entities.File file) {
+		try {
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(file.getData()));
+			String[] rezolutions = file.photo.rezolucije.split(";");
+			for (String rez : rezolutions) {
+				int width = Integer.parseInt(rez.split("x")[0]);
+				int height = Integer.parseInt(rez.split("x")[1]);
+
+				if (width > img.getWidth())
+					return false;
+				if (height > img.getHeight())
+					return false;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
+		return true;
+	}
+
+	static public byte[] scaleImage(byte[] data, int width, int height) {
+		try {
+			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
+
+			BufferedImage newImg = Thumbnails.of(img).size(width, height).asBufferedImage();
+
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(newImg, "png", baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			return imageInByte;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }
