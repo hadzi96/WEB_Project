@@ -145,6 +145,13 @@ public class ServiceUser {
 		if (!user.type.equals("operater"))
 			return false;
 
+		User bUser = daoProvera.getUserbyName(req.username);
+		if(bUser == null)
+			return false;
+		
+		if(bUser.type.equals("operater") || bUser.type.equals("admin"))
+			return false;
+		
 		return dao.block(req.username);
 	}
 

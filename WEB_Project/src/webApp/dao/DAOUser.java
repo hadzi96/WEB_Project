@@ -10,6 +10,7 @@ import webApp.responses.LoginResponse;
 import webApp.utils.UtilsMethods;
 
 public class DAOUser extends DAO<User> {
+	DAOProveraUser provera = new DAOProveraUser();
 
 	public DAOUser() {
 		super(User.class);
@@ -121,6 +122,10 @@ public class DAOUser extends DAO<User> {
 	}
 
 	public LoginResponse login(User user) {
+		String cookie = UtilsMethods.generateToken(100);
+		while (provera.getUser(cookie) != null)
+			cookie = UtilsMethods.generateToken(100);
+
 		Connection conn = createConnection();
 
 		if (conn == null)
@@ -141,7 +146,6 @@ public class DAOUser extends DAO<User> {
 			closeResultSet(rs);
 
 			if (status) {
-				String cookie = UtilsMethods.generateToken(100);
 				st = conn.prepareStatement("DELETE FROM cookie WHERE `timeout` < now()");
 				st.execute();
 				closeStat(st);
@@ -245,8 +249,9 @@ public class DAOUser extends DAO<User> {
 
 		try {
 			String statement = String.format(
-					"UPDATE user SET isActive = false WHERE username = '%s' AND type != 'admin' AND type != 'operater';",
-					username);
+					"UPDATE user SET isActive = false WHERE username = '%s' AND type != 'admin' AND type != 'operater';"
+							+ "DELETE FROM cookie WHERE username = '%s';",
+					username, username);
 			PreparedStatement st = conn.prepareStatement(statement);
 
 			st.execute();
