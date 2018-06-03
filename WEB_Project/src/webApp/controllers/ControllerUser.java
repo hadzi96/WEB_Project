@@ -10,6 +10,9 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import webApp.entities.Card;
 import webApp.entities.User;
@@ -54,10 +57,14 @@ public class ControllerUser {
 
 	@POST
 	@Path("/login")
-	@Produces("text/json")
+	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes("application/json")
-	public LoginResponse logIn(User user) {
-		return this.service.login(user);
+	public Response logIn(User user) {
+		LoginResponse res = service.login(user);
+		if (res.success == false)
+			return null;
+		NewCookie cookie = new NewCookie("WebProject", res.cookie);
+		return Response.ok(res.message).cookie(cookie).build();
 	}
 
 	@POST

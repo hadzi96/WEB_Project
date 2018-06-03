@@ -6,9 +6,13 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -37,7 +41,9 @@ public class ControllerPhoto {
 	@Path("/search")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> search(SearchItemReq parameters) {
+	public List<Photo> search(SearchItemReq parameters, @CookieParam("WebProject") javax.ws.rs.core.Cookie cookie) {
+		System.out.println(cookie.getValue());
+		parameters.cookie = cookie.getValue();
 		return service.search(parameters);
 	}
 
