@@ -10,7 +10,6 @@ import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.req.AddItemReq;
 import webApp.entities.req.BuyReq;
-import webApp.entities.req.Cookie;
 import webApp.utils.EmailSender;
 
 public class ServiceKorpa {
@@ -25,8 +24,8 @@ public class ServiceKorpa {
 		this.daoPhoto = new DAOPhoto();
 	}
 
-	public boolean addItem(AddItemReq req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public boolean addItem(AddItemReq req, String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return false;
 
@@ -53,16 +52,16 @@ public class ServiceKorpa {
 		return dao.addItem(username, photo, req.rezolucija, cena);
 	}
 
-	public List<Item> getKorpa(Cookie req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public List<Item> getKorpa(String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return null;
 
 		return dao.getKorpa(username);
 	}
 
-	public boolean buy(BuyReq req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public boolean buy(BuyReq req, String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return false;
 

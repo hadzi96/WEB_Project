@@ -10,17 +10,12 @@ public class DelOpReq extends BasicEntity implements Serializable {
 
 	public DelOpReq() {
 		super();
-		this.columnsName.add(COOKIE);
 		this.columnsName.add(USERNAME);
 	}
 
 	@Override
 	public void setValueForColumnName(String columnName, Object value) {
 
-		if (COOKIE.equals(columnName)) {
-			this.cookie = UtilsMethods.saftyConversionToStr(value);
-			return;
-		}
 		if (USERNAME.equals(columnName)) {
 			this.cookie = UtilsMethods.saftyConversionToStr(value);
 			return;
@@ -31,9 +26,6 @@ public class DelOpReq extends BasicEntity implements Serializable {
 	@Override
 	public Object getValueForColumnName(String columnName) {
 
-		if (COOKIE.equals(columnName)) {
-			return this.cookie;
-		}
 		if (USERNAME.equals(columnName)) {
 			return this.username;
 		}
@@ -46,6 +38,5 @@ public class DelOpReq extends BasicEntity implements Serializable {
 	public String username;
 
 	// constants
-	public static final String COOKIE = "cookie";
 	public static final String USERNAME = "username";
 }

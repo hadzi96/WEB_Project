@@ -8,7 +8,6 @@ import webApp.dao.DAOProveraUser;
 import webApp.entities.File;
 import webApp.entities.Photo;
 import webApp.entities.User;
-import webApp.entities.req.Cookie;
 import webApp.entities.req.OdobriReq;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
@@ -28,8 +27,8 @@ public class ServicePhoto {
 		this.daoProvera = new DAOProveraUser();
 	}
 
-	public List<Photo> search(SearchItemReq parameters) {
-		if (!daoProvera.hasCookie(parameters.cookie))
+	public List<Photo> search(SearchItemReq parameters, String cookie) {
+		if (!daoProvera.hasCookie(cookie))
 			return null;
 
 		int offst = UtilsMethods.saftyConversionInt(parameters.offset);
@@ -62,15 +61,15 @@ public class ServicePhoto {
 	}
 
 	// open just one (by id)
-	public Photo open(OpenItemReq parameters) {
-		if (!daoProvera.hasCookie(parameters.cookie))
+	public Photo open(OpenItemReq parameters, String cookie) {
+		if (!daoProvera.hasCookie(cookie))
 			return null;
 
 		return dao.search(UtilsMethods.openStatement(parameters.id)).get(0);
 	}
 
-	public boolean send(File file) {
-		User user = daoProvera.getUser(file.cookie);
+	public boolean send(File file, String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null)
 			return false;
 
@@ -101,8 +100,8 @@ public class ServicePhoto {
 		return true;
 	}
 
-	public byte[] getPhoto(OpenItemReq parameters) {
-		if (!daoProvera.hasCookie(parameters.cookie))
+	public byte[] getPhoto(OpenItemReq parameters, String cookie) {
+		if (!daoProvera.hasCookie(cookie))
 			return null;
 
 		Photo photo = dao.getPhoto(parameters.id);
@@ -114,8 +113,8 @@ public class ServicePhoto {
 		return UtilsMethods.readFile(filePath);
 	}
 
-	public List<Photo> getNeodobrene(Cookie req) {
-		User user = daoProvera.getUser(req.cookie);
+	public List<Photo> getNeodobrene(String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null)
 			return null;
 
@@ -125,8 +124,8 @@ public class ServicePhoto {
 		return dao.getNeodobrene();
 	}
 
-	public boolean odobri(OdobriReq req) {
-		User user = daoProvera.getUser(req.cookie);
+	public boolean odobri(OdobriReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null)
 			return false;
 

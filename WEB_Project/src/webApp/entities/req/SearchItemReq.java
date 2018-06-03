@@ -9,7 +9,6 @@ public class SearchItemReq extends BasicEntity implements Serializable {
 
 	public SearchItemReq() {
 		super();
-		this.columnsName.add(COOKIE);
 		this.columnsName.add(OFFSET);
 		this.columnsName.add(SEARCH);
 		this.columnsName.add(SEARCH_VALUE);
@@ -19,10 +18,6 @@ public class SearchItemReq extends BasicEntity implements Serializable {
 	@Override
 	public void setValueForColumnName(String columnName, Object value) {
 
-		if (COOKIE.equals(columnName)) {
-			this.cookie = UtilsMethods.saftyConversionToStr(value);
-			return;
-		}
 		if (OFFSET.equals(columnName)) {
 			this.offset = UtilsMethods.saftyConversionToStr(value);
 			return;
@@ -45,9 +40,6 @@ public class SearchItemReq extends BasicEntity implements Serializable {
 	@Override
 	public Object getValueForColumnName(String columnName) {
 
-		if (COOKIE.equals(columnName)) {
-			return this.cookie;
-		}
 		if (OFFSET.equals(columnName)) {
 			return this.offset;
 		}
@@ -66,13 +58,11 @@ public class SearchItemReq extends BasicEntity implements Serializable {
 
 	// properties
 	public static final long serialVersionUID = 1L;
-	public String cookie;
 	public String offset;
 	public String search;
 	public String searchValue;
 	public String filter;
 	// constants
-	public static final String COOKIE = "cookie";
 	public static final String OFFSET = "offset";
 	public static final String SEARCH = "search";
 	public static final String SEARCH_VALUE = "searchValue";

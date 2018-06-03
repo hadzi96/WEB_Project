@@ -5,11 +5,13 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
@@ -20,7 +22,6 @@ import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
 import webApp.entities.req.BlockReq;
 import webApp.entities.req.ChangePWReq;
-import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
@@ -71,40 +72,38 @@ public class ControllerUser {
 	@Path("/addcard")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean addCard(AddCardReq req) {
-		return service.addCard(req);
+	public boolean addCard(AddCardReq req, @CookieParam("WebProject") Cookie cookie) {
+		return service.addCard(req, cookie.getValue());
 	}
 
-	@POST
+	@GET
 	@Path("/getcards")
 	@Produces("text/json")
-	@Consumes("application/json")
-	public List<Card> getCard(Cookie req) {
-		return service.getCard(req);
+	public List<Card> getCard(@CookieParam("WebProject") Cookie cookie) {
+		return service.getCard(cookie.getValue());
 	}
 
-	@POST
+	@GET
 	@Path("/getlock")
 	@Produces("text/json")
-	@Consumes("application/json")
-	public Integer getLock(Cookie req) {
-		return service.getLock(req);
+	public Integer getLock(@CookieParam("WebProject") Cookie cookie) {
+		return service.getLock(cookie.getValue());
 	}
 
 	@POST
 	@Path("/addoperater")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean addOperater(AddOpReq req) {
-		return service.addoperater(req);
+	public boolean addOperater(AddOpReq req, @CookieParam("WebProject") Cookie cookie) {
+		return service.addoperater(req, cookie.getValue());
 	}
 
 	@POST
 	@Path("/deloperater")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean delOperater(DelOpReq req) {
-		return service.deloperater(req);
+	public boolean delOperater(DelOpReq req, @CookieParam("WebProject") Cookie cookie) {
+		return service.deloperater(req, cookie.getValue());
 	}
 
 	@POST
@@ -119,8 +118,8 @@ public class ControllerUser {
 	@Path("/block")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean block(BlockReq req) {
-		return service.block(req);
+	public boolean block(BlockReq req, @CookieParam("WebProject") Cookie cookie) {
+		return service.block(req, cookie.getValue());
 	}
 
 }

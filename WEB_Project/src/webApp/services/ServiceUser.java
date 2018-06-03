@@ -11,7 +11,6 @@ import webApp.entities.req.AddCardReq;
 import webApp.entities.req.AddOpReq;
 import webApp.entities.req.BlockReq;
 import webApp.entities.req.ChangePWReq;
-import webApp.entities.req.Cookie;
 import webApp.entities.req.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
@@ -73,8 +72,8 @@ public class ServiceUser {
 		return res;
 	}
 
-	public boolean addCard(AddCardReq req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public boolean addCard(AddCardReq req, String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return false;
 		if (req.creditCard < 1000000000000000L || req.creditCard > 9999999999999999L) {
@@ -84,24 +83,24 @@ public class ServiceUser {
 		return daoCard.addCard(username, req.creditCard);
 	}
 
-	public List<Card> getCard(Cookie req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public List<Card> getCard(String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return null;
 
 		return daoCard.getCards(username);
 	}
 
-	public Integer getLock(Cookie req) {
-		String username = daoProvera.getUser(req.cookie).username;
+	public Integer getLock(String cookie) {
+		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
 			return null;
 
 		return dao.getLock(username);
 	}
 
-	public boolean addoperater(AddOpReq req) {
-		User user = daoProvera.getUser(req.cookie);
+	public boolean addoperater(AddOpReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null || !user.type.equals("admin"))
 			return false;
 
@@ -118,8 +117,8 @@ public class ServiceUser {
 		return dao.register(operater, "utilized");
 	}
 
-	public boolean deloperater(DelOpReq req) {
-		User user = daoProvera.getUser(req.cookie);
+	public boolean deloperater(DelOpReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null || !user.type.equals("admin"))
 			return false;
 
@@ -138,8 +137,8 @@ public class ServiceUser {
 		return dao.changePW(user.username, req.newpassword);
 	}
 
-	public boolean block(BlockReq req) {
-		User user = daoProvera.getUser(req.cookie);
+	public boolean block(BlockReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
 		if (user == null)
 			return false;
 

@@ -10,7 +10,6 @@ import com.sun.jndi.cosnaming.IiopUrl.Address;
 
 public class File {
 	public Photo photo;
-	public String cookie;
 
 	public File() {
 	}
@@ -27,11 +26,6 @@ public class File {
 		this.data = data;
 	}
 
-	@FormParam("cookie")
-	@PartType("application/json")
-	public void setCookie(String cookie) {
-		this.cookie = cookie.split("\"")[3];
-	}
 
 	@FormParam("photo")
 	@PartType("application/json")

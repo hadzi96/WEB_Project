@@ -12,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
@@ -19,7 +20,6 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import webApp.entities.File;
 import webApp.entities.Photo;
-import webApp.entities.req.Cookie;
 import webApp.entities.req.OdobriReq;
 import webApp.entities.req.OpenItemReq;
 import webApp.entities.req.SearchItemReq;
@@ -41,18 +41,16 @@ public class ControllerPhoto {
 	@Path("/search")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> search(SearchItemReq parameters, @CookieParam("WebProject") javax.ws.rs.core.Cookie cookie) {
-		System.out.println(cookie.getValue());
-		parameters.cookie = cookie.getValue();
-		return service.search(parameters);
+	public List<Photo> search(SearchItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+		return service.search(parameters, cookie.getValue());
 	}
 
 	@POST
 	@Path("/open")
 	@Consumes("application/json")
 	@Produces("text/json")
-	public OpenResponse open(OpenItemReq parameters) {
-		Photo photo = service.open(parameters);
+	public OpenResponse open(OpenItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+		Photo photo = service.open(parameters, cookie.getValue());
 		return new OpenResponse(photo.id, photo.mesto, photo.rezolucije, photo.cene, photo.opis, photo.ocena);
 	}
 
@@ -60,33 +58,32 @@ public class ControllerPhoto {
 	@Path("/send")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean send(@MultipartForm File file) {
-		return service.send(file);
+	public boolean send(@MultipartForm File file, @CookieParam("WebProject") Cookie cookie) {
+		return service.send(file, cookie.getValue());
 	}
 
 	@POST
 	@Path("/getphoto")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	public String getFile(OpenItemReq parameters) {
-		byte[] file = service.getPhoto(parameters);
+	public String getFile(OpenItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+		byte[] file = service.getPhoto(parameters, cookie.getValue());
 
 		return Base64.getEncoder().encodeToString(file);
 	}
 
-	@POST
+	@GET
 	@Path("/getneodobrene")
 	@Produces("text/json")
-	@Consumes("application/json")
-	public List<Photo> getNeodobrene(Cookie req) {
-		return service.getNeodobrene(req);
+	public List<Photo> getNeodobrene(@CookieParam("WebProject") Cookie cookie) {
+		return service.getNeodobrene(cookie.getValue());
 	}
 
 	@POST
 	@Path("/odobri")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean odobri(OdobriReq req) {
-		return service.odobri(req);
+	public boolean odobri(OdobriReq req, @CookieParam("WebProject") Cookie cookie) {
+		return service.odobri(req, cookie.getValue());
 	}
 }
