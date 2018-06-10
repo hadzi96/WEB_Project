@@ -1,4 +1,4 @@
-package webApp.entities.req;
+package webApp.reqests;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -6,14 +6,13 @@ import java.sql.Date;
 import webApp.entities.BasicEntity;
 import webApp.utils.UtilsMethods;
 
-public class AddOpReq extends BasicEntity implements Serializable {
+public class ChangePWReq extends BasicEntity implements Serializable {
 
-	public AddOpReq() {
+	public ChangePWReq() {
 		super();
 		this.columnsName.add(USERNAME);
 		this.columnsName.add(PASSWORD);
-		this.columnsName.add(EMAIL);
-		this.columnsName.add(DRZAVA);
+		this.columnsName.add(NEW_PASSWORD);
 	}
 
 	@Override
@@ -27,12 +26,8 @@ public class AddOpReq extends BasicEntity implements Serializable {
 			this.password = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
-		if (EMAIL.equals(columnName)) {
-			this.email = UtilsMethods.saftyConversionToStr(value);
-			return;
-		}
-		if (DRZAVA.equals(columnName)) {
-			this.drzava = UtilsMethods.saftyConversionToStr(value);
+		if (NEW_PASSWORD.equals(columnName)) {
+			this.newpassword = UtilsMethods.saftyConversionToStr(value);
 			return;
 		}
 
@@ -47,13 +42,9 @@ public class AddOpReq extends BasicEntity implements Serializable {
 		if (PASSWORD.equals(columnName)) {
 			return this.password;
 		}
-		if (EMAIL.equals(columnName)) {
-			return this.email;
+		if (NEW_PASSWORD.equals(columnName)) {
+			return this.newpassword;
 		}
-		if (DRZAVA.equals(columnName)) {
-			return this.drzava;
-		}
-
 		return null;
 	}
 
@@ -61,12 +52,10 @@ public class AddOpReq extends BasicEntity implements Serializable {
 	public static final long serialVersionUID = 1L;
 	public String username;
 	public String password;
-	public String email;
-	public String drzava;
+	public String newpassword;
 
 	// constants
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
-	public static final String EMAIL = "email";
-	public static final String DRZAVA = "drzava";
+	public static final String NEW_PASSWORD = "newpassword";
 }

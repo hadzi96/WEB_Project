@@ -18,11 +18,11 @@ import javax.ws.rs.core.Response;
 
 import webApp.entities.Card;
 import webApp.entities.User;
-import webApp.entities.req.AddCardReq;
-import webApp.entities.req.AddOpReq;
-import webApp.entities.req.BlockReq;
-import webApp.entities.req.ChangePWReq;
-import webApp.entities.req.DelOpReq;
+import webApp.reqests.AddCardReq;
+import webApp.reqests.AddOpReq;
+import webApp.reqests.BlockReq;
+import webApp.reqests.ChangePWReq;
+import webApp.reqests.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
 

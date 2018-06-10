@@ -10,7 +10,7 @@ import java.util.List;
 import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.User;
-import webApp.entities.req.AddItemReq;
+import webApp.reqests.AddItemReq;
 
 public class DAOKorpa extends DAO<Item> {
 

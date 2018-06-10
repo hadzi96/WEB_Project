@@ -12,9 +12,9 @@ import webApp.dao.DAOProveraUser;
 import webApp.entities.File;
 import webApp.entities.Photo;
 import webApp.entities.User;
-import webApp.entities.req.OdobriReq;
-import webApp.entities.req.OpenItemReq;
-import webApp.entities.req.SearchItemReq;
+import webApp.reqests.OdobriReq;
+import webApp.reqests.OpenItemReq;
+import webApp.reqests.SearchItemReq;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {

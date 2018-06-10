@@ -1,4 +1,4 @@
-package webApp.entities.req;
+package webApp.reqests;
 
 import java.io.Serializable;
 

@@ -14,8 +14,8 @@ import javax.ws.rs.core.Cookie;
 
 import webApp.dao.DAOKorpa;
 import webApp.entities.Item;
-import webApp.entities.req.AddItemReq;
-import webApp.entities.req.BuyReq;
+import webApp.reqests.AddItemReq;
+import webApp.reqests.BuyReq;
 import webApp.services.ServiceKorpa;
 
 @Stateless

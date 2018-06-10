@@ -9,8 +9,8 @@ import webApp.dao.DAOProveraUser;
 import webApp.entities.Item;
 import webApp.entities.Photo;
 import webApp.entities.User;
-import webApp.entities.req.AddItemReq;
-import webApp.entities.req.BuyReq;
+import webApp.reqests.AddItemReq;
+import webApp.reqests.BuyReq;
 import webApp.utils.EmailSender;
 import webApp.utils.UtilsMethods;
 
