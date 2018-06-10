@@ -43,7 +43,7 @@ public abstract class DAO<T extends BasicEntity> {
 
 	protected Connection createConnection() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			// TODO nekim log framework-om ovo bi trebalo da se upisuje u log
 			e.printStackTrace();

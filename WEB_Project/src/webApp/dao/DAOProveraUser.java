@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import webApp.entities.User;
+import webApp.utils.CookieMethods;
 
 public class DAOProveraUser extends DAO<User> {
 
@@ -13,39 +14,9 @@ public class DAOProveraUser extends DAO<User> {
 		super(User.class);
 	}
 
-	public boolean hasCookie(String cookie) {
-		deleteOldCookies();
-		Connection conn = createConnection();
-
-		if (conn == null)
-			return false;
-
-		try {
-			PreparedStatement st = conn
-					.prepareStatement(String.format("SELECT * FROM cookie WHERE value = '%s'", cookie));
-
-			ResultSet rs = st.executeQuery();
-
-			boolean status = false;
-			if (rs.next())
-				status = true;
-
-			closeStat(st);
-			closeResultSet(rs);
-
-			return status;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection(conn);
-		}
-		return false;
-	}
-
 	public User getUser(String cookie) {
-		deleteOldCookies();
 		Connection conn = createConnection();
-		String username = null;
+		String username = CookieMethods.getUsrnameFromCookie(cookie);
 		User user = null;
 
 		if (conn == null)
@@ -53,19 +24,9 @@ public class DAOProveraUser extends DAO<User> {
 
 		try {
 			PreparedStatement st = conn
-					.prepareStatement(String.format("SELECT * FROM cookie WHERE value = '%s'", cookie));
+					.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s'", username));
 
 			ResultSet rs = st.executeQuery();
-
-			if (rs.next())
-				username = rs.getString(1);
-
-			closeStat(st);
-			closeResultSet(rs);
-
-			st = conn.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s'", username));
-
-			rs = st.executeQuery();
 
 			if (rs.next())
 				user = readFromResultSet(rs);
@@ -82,26 +43,7 @@ public class DAOProveraUser extends DAO<User> {
 		return null;
 	}
 
-	public void deleteOldCookies() {
-		Connection conn = createConnection();
-
-		if (conn == null)
-			return;
-
-		try {
-			PreparedStatement st = conn.prepareStatement("DELETE FROM cookie WHERE timeout < NOW()");
-			st.execute();
-			closeStat(st);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection(conn);
-		}
-	}
-
 	public User getUser(String username, String password) {
-		deleteOldCookies();
 		Connection conn = createConnection();
 		User user = null;
 
@@ -127,9 +69,8 @@ public class DAOProveraUser extends DAO<User> {
 		}
 		return null;
 	}
-	
+
 	public User getUserbyName(String username) {
-		deleteOldCookies();
 		Connection conn = createConnection();
 		User user = null;
 
@@ -137,8 +78,8 @@ public class DAOProveraUser extends DAO<User> {
 			return null;
 
 		try {
-			PreparedStatement st = conn.prepareStatement(
-					String.format("SELECT * FROM user WHERE username = '%s'", username));
+			PreparedStatement st = conn
+					.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s'", username));
 
 			ResultSet rs = st.executeQuery();
 			if (rs.next())

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 import webApp.entities.User;
 import webApp.responses.LoginResponse;
+import webApp.utils.CookieMethods;
 import webApp.utils.UtilsMethods;
 
 public class DAOUser extends DAO<User> {
@@ -122,10 +123,6 @@ public class DAOUser extends DAO<User> {
 	}
 
 	public LoginResponse login(User user) {
-		String cookie = UtilsMethods.generateToken(100);
-		while (provera.getUser(cookie) != null)
-			cookie = UtilsMethods.generateToken(100);
-
 		Connection conn = createConnection();
 
 		if (conn == null)
@@ -146,15 +143,7 @@ public class DAOUser extends DAO<User> {
 			closeResultSet(rs);
 
 			if (status) {
-				st = conn.prepareStatement("DELETE FROM cookie WHERE `timeout` < now()");
-				st.execute();
-				closeStat(st);
-
-				st = conn.prepareStatement(
-						String.format("INSERT INTO `cookie` (`username`, `value`, `timeout`) VALUES\r\n"
-								+ "('%s', '%s', NOW()+ INTERVAL 1 DAY);", user.username, cookie));
-				st.execute();
-				closeStat(st);
+				String cookie = CookieMethods.createCookie(user.username);
 				return new LoginResponse(true, cookie);
 			} else {
 				return new LoginResponse(false);

@@ -15,6 +15,7 @@ import webApp.entities.User;
 import webApp.reqests.OdobriReq;
 import webApp.reqests.OpenItemReq;
 import webApp.reqests.SearchItemReq;
+import webApp.utils.CookieMethods;
 import webApp.utils.UtilsMethods;
 
 public class ServicePhoto {
@@ -32,8 +33,7 @@ public class ServicePhoto {
 	}
 
 	public List<Photo> search(SearchItemReq parameters, String cookie) {
-		if (!daoProvera.hasCookie(cookie)) {
-			System.out.println("HELO???" + cookie);
+		if (CookieMethods.getUsrnameFromCookie(cookie) == null) {
 			return null;
 		}
 
@@ -68,7 +68,7 @@ public class ServicePhoto {
 
 	// open just one (by id)
 	public Photo open(OpenItemReq parameters, String cookie) {
-		if (!daoProvera.hasCookie(cookie))
+		if (CookieMethods.getUsrnameFromCookie(cookie) == null)
 			return null;
 
 		return dao.search(UtilsMethods.openStatement(parameters.id)).get(0);
@@ -119,7 +119,7 @@ public class ServicePhoto {
 	}
 
 	public byte[] getPhoto(OpenItemReq parameters, String cookie) {
-		if (!daoProvera.hasCookie(cookie))
+		if (CookieMethods.getUsrnameFromCookie(cookie) == null)
 			return null;
 
 		Photo photo = dao.getPhoto(parameters.id);

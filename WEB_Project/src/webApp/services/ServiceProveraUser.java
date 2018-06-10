@@ -9,11 +9,4 @@ public class ServiceProveraUser {
 	public ServiceProveraUser(DAOProveraUser dao) {
 		this.dao = dao;
 	}
-
-	public boolean hasCookie(String cookie) {
-		if (cookie == null || cookie.length() < 100)
-			return false;
-
-		return dao.hasCookie(cookie);
-	}
 }

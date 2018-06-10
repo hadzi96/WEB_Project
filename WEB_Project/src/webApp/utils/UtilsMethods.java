@@ -6,8 +6,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Random;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
 
 import com.google.common.io.Files;
@@ -227,7 +230,6 @@ public final class UtilsMethods {
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
 
 			BufferedImage newImg = Thumbnails.of(img).size(width, height).asBufferedImage();
-
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(newImg, "png", baos);
