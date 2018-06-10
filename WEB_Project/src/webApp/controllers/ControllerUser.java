@@ -65,6 +65,8 @@ public class ControllerUser {
 		if (res.success == false)
 			return null;
 		NewCookie cookie = new NewCookie("WebProject", res.cookie);
+		if (res.message == null)
+			res.message = res.cookie;
 		return Response.ok(res.message).cookie(cookie).build();
 	}
 
