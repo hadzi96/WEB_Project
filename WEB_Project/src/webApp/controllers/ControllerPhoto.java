@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -41,7 +42,7 @@ public class ControllerPhoto {
 	@Path("/search")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public List<Photo> search(SearchItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+	public List<Photo> search(SearchItemReq parameters, @HeaderParam("Authorization") Cookie cookie) {
 		return service.search(parameters, cookie.getValue());
 	}
 
@@ -49,7 +50,7 @@ public class ControllerPhoto {
 	@Path("/open")
 	@Consumes("application/json")
 	@Produces("text/json")
-	public OpenResponse open(OpenItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+	public OpenResponse open(OpenItemReq parameters, @HeaderParam("Authorization") Cookie cookie) {
 		Photo photo = service.open(parameters, cookie.getValue());
 		return new OpenResponse(photo.id, photo.mesto, photo.rezolucije, photo.cene, photo.opis, photo.ocena);
 	}
@@ -58,7 +59,7 @@ public class ControllerPhoto {
 	@Path("/send")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean send(@MultipartForm File file, @CookieParam("WebProject") Cookie cookie) {
+	public boolean send(@MultipartForm File file, @HeaderParam("Authorization") Cookie cookie) {
 		return service.send(file, cookie.getValue());
 	}
 
@@ -66,7 +67,7 @@ public class ControllerPhoto {
 	@Path("/getphoto")
 	@Consumes("application/json")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
-	public String getFile(OpenItemReq parameters, @CookieParam("WebProject") Cookie cookie) {
+	public String getFile(OpenItemReq parameters, @HeaderParam("Authorization") Cookie cookie) {
 		byte[] file = service.getPhoto(parameters, cookie.getValue());
 
 		return Base64.getEncoder().encodeToString(file);
@@ -75,7 +76,7 @@ public class ControllerPhoto {
 	@GET
 	@Path("/getneodobrene")
 	@Produces("text/json")
-	public List<Photo> getNeodobrene(@CookieParam("WebProject") Cookie cookie) {
+	public List<Photo> getNeodobrene(@HeaderParam("Authorization") Cookie cookie) {
 		return service.getNeodobrene(cookie.getValue());
 	}
 
@@ -83,7 +84,7 @@ public class ControllerPhoto {
 	@Path("/odobri")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean odobri(OdobriReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean odobri(OdobriReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.odobri(req, cookie.getValue());
 	}
 }

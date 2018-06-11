@@ -5,8 +5,8 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -74,21 +74,21 @@ public class ControllerUser {
 	@Path("/addcard")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean addCard(AddCardReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean addCard(AddCardReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.addCard(req, cookie.getValue());
 	}
 
 	@GET
 	@Path("/getcards")
 	@Produces("text/json")
-	public List<Card> getCard(@CookieParam("WebProject") Cookie cookie) {
+	public List<Card> getCard(@HeaderParam("Authorization") Cookie cookie) {
 		return service.getCard(cookie.getValue());
 	}
 
 	@GET
 	@Path("/getlock")
 	@Produces("text/json")
-	public Integer getLock(@CookieParam("WebProject") Cookie cookie) {
+	public Integer getLock(@HeaderParam("Authorization") Cookie cookie) {
 		return service.getLock(cookie.getValue());
 	}
 
@@ -96,7 +96,7 @@ public class ControllerUser {
 	@Path("/addoperater")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean addOperater(AddOpReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean addOperater(AddOpReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.addoperater(req, cookie.getValue());
 	}
 
@@ -104,7 +104,7 @@ public class ControllerUser {
 	@Path("/deloperater")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean delOperater(DelOpReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean delOperater(DelOpReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.deloperater(req, cookie.getValue());
 	}
 
@@ -120,7 +120,7 @@ public class ControllerUser {
 	@Path("/block")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean block(BlockReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean block(BlockReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.block(req, cookie.getValue());
 	}
 

@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,14 +35,14 @@ public class ControllerKorpa {
 	@Path("/addItem")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean addItem(AddItemReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean addItem(AddItemReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.addItem(req, cookie.getValue());
 	}
 
 	@GET
 	@Path("/getKorpa")
 	@Produces("text/json")
-	public List<Item> getKorpa(@CookieParam("WebProject") Cookie cookie) {
+	public List<Item> getKorpa(@HeaderParam("Authorization") Cookie cookie) {
 		return service.getKorpa(cookie.getValue());
 	}
 
@@ -48,7 +50,7 @@ public class ControllerKorpa {
 	@Path("/buy")
 	@Produces("text/json")
 	@Consumes("application/json")
-	public boolean buy(BuyReq req, @CookieParam("WebProject") Cookie cookie) {
+	public boolean buy(BuyReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.buy(req, cookie.getValue());
 	}
 
