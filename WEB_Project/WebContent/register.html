@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="register">
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="register.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body>
+
+	<div ng-controller="CtrlRegister" style="text-align: center">
+		<form novalidate>
+			Username:<br /> <input type="text" ng-model="user.username"><br />
+			Password:<br /> <input type="password" ng-model="user.password"><br />
+			E-mail:<br /> <input type="text" ng-model="user.email"><br />
+			Drzava:<br /> <input type="text" ng-model="user.drzava"><br />
+			<br />
+			<button ng-click="register(user)">register</button>
+		</form>
+
+	</div>
+
+</body>
+</html>
