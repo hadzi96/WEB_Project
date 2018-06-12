@@ -53,7 +53,7 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 	};
 	
 	
-	$scope.previous = function() {
+	$scope.previous = function() { 
 		var parameter = {};
 		parameter = angular.copy($scope.parameter);
 		$scope.offset--;
