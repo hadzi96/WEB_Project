@@ -1,6 +1,7 @@
 var login = angular.module('login', []);
 
 login.controller('CtrlLogin', function($scope, $window, ServiceLogin) {
+	$window.localStorage.removeItem("webProj");
 	$scope.message = "";
 	$scope.login = function() {
 		var user = {};
@@ -19,8 +20,7 @@ login.controller('CtrlLogin', function($scope, $window, ServiceLogin) {
 	};
 
 	$scope.register = function() {
-        var landingUrl = "http://localhost:8080/WEB_Project/register.html";
-        $window.location.href = landingUrl;
+        $window.location.href = "http://localhost:8080/WEB_Project/register.html";
 	};
 
 });

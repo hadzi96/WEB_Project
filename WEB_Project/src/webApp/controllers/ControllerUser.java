@@ -89,7 +89,11 @@ public class ControllerUser {
 	@Path("/getlock")
 	@Produces("text/json")
 	public Integer getLock(@HeaderParam("Authorization") Cookie cookie) {
-		return service.getLock(cookie.getValue());
+		try {
+			return service.getLock(cookie.getValue());
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@POST
