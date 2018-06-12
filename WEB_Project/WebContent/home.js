@@ -25,6 +25,15 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		parameter.offset = 0;
 		ServiceHome.search(parameter, cookie).then(function(response){
 			$scope.searchResult = response.data;
+			var i = 0;
+			for(var item in $scope.searchResult){
+				console.log("item: " + $scope.searchResult[item].id);
+				var param = {};
+				param.id = $scope.searchResult[item].id;
+				ServiceHome.getPhoto(param, cookie).then(function(response){
+					$scope.searchResult[i++].photo = angular.copy(response.data);
+				});
+			}
 		});
 	};
 
@@ -41,6 +50,12 @@ home.factory('ServiceHome', [ '$http', function($http) {
 	
 	service.search = function(parameter, cookie){
 		return $http.post('http://localhost:8080/WEB_Project/server/photo/search', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.getPhoto = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/photo/getphoto', parameter,{
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}
