@@ -51,8 +51,13 @@ public class ControllerPhoto {
 	@Consumes("application/json")
 	@Produces("text/json")
 	public OpenResponse open(OpenItemReq parameters, @HeaderParam("Authorization") Cookie cookie) {
-		Photo photo = service.open(parameters, cookie.getValue());
-		return new OpenResponse(photo.id, photo.mesto, photo.rezolucije, photo.cene, photo.opis, photo.ocena);
+		try {
+			Photo photo = service.open(parameters, cookie.getValue());
+			return new OpenResponse(photo.id, photo.ime, photo.autor, photo.mesto, photo.rezolucije, photo.cene,
+					photo.opis, photo.ocena);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@POST

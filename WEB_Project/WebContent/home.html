@@ -65,7 +65,7 @@
 				<td>Autor: {{item.autor}}</td>
 			</tr>
 			<tr>
-				<td><img data-ng-src="data:image/png;base64,{{item.photo}}" /></td>
+				<td ng-click="open(item.id)"><img data-ng-src="data:image/png;base64,{{item.photo}}" /></td>
 			</tr>
 		</table>
 		<button ng-click="previous()"><</button>

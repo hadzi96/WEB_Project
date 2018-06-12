@@ -1,0 +1,57 @@
+<!DOCTYPE html >
+<html ng-app="item">
+<head>
+<meta charset="UTF-8">
+<title>Item</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="item.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlItem" ng-init="hide=true;" ng-hide="hide">
+
+	<table style="border: 1px solid black;">
+		<tr>
+			<td>Ime: {{item.ime}}</td>
+			<td><img data-ng-src="data:image/png;base64,{{item.photo}}" /></td>
+		</tr>
+		<tr>
+			<td>Autor: {{item.autor}}</td>
+		</tr>
+		<tr>
+			<td>Mesto: {{item.mesto}}</td>
+		</tr>
+		<tr>
+			<td>Opis: {{item.opis}}</td>
+		</tr>
+		<tr>
+			<td>Ocena: {{item.ocena}}</td>
+		</tr>
+		<tr>
+			<td ng-repeat="c in item.cene track by $index">{{c}} $</td>
+		</tr>
+		<tr>
+			<td ng-repeat="r in item.rezolucije track by $index">{{r}}</td>
+		</tr>
+	</table>
+
+	<br>
+	<table>
+		<tr>
+			<td>Izaberi rezoluciju:</td>
+			<td><select ng-model="parameter.rezolucija">
+					<option ng-repeat="rez in item.rezolucije track by $index"
+						value={{rez}}>{{rez}}</option>
+			</select></td>
+		</tr>
+	</table>
+	<button ng-click="addToKorpa(parameter)">Dodaj u korpu</button>
+	<br>
+	{{message}}
+
+</body>
+</html>

@@ -69,6 +69,12 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		});
 	};
 	
+	
+	$scope.open = function(id) {
+		$window.localStorage.setItem("itemId", id);
+		$window.location.href = "http://localhost:8080/WEB_Project/item.html";
+	};
+	
 
 });
 
