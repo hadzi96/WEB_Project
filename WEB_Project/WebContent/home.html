@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Home</title>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
 <script type="text/javascript" src="home.js"></script>
 <style>
 [ng\:cloak], [ng-cloak], .ng-cloak {
@@ -14,9 +15,12 @@
 <body>
 
 	<div ng-controller="CtrlHome" style="text-align: center">
-		<br/>
 		<form novalidate>
-			<button ng-click="getKorpa()">korpa</button>
+			<br /> <input type="text" ng-model="parameter.search"
+				placeholder="search"> <br /> <input type="text"
+				ng-model="parameter.searchValue" placeholder="searchValue">
+			<input type="text" ng-model="parameter.filter" placeholder="filter">
+			<button ng-click="search(parameter)">Search</button>
 		</form>
 	</div>
 
