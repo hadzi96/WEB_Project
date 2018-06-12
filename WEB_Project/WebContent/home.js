@@ -23,19 +23,52 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		var parameter = {};
 		parameter = angular.copy($scope.parameter);
 		parameter.offset = 0;
+		$scope.offset = 0;
 		ServiceHome.search(parameter, cookie).then(function(response){
 			$scope.searchResult = response.data;
-			var i = 0;
-			for(var item in $scope.searchResult){
-				console.log("item: " + $scope.searchResult[item].id);
+			for(var i = 0; i < $scope.searchResult.length; i++) {
+				console.log("item: " + $scope.searchResult[i].id);
 				var param = {};
-				param.id = $scope.searchResult[item].id;
-				ServiceHome.getPhoto(param, cookie).then(function(response){
-					$scope.searchResult[i++].photo = angular.copy(response.data);
-				});
+				param.id = $scope.searchResult[i].id;
+				getPhoto($scope, ServiceHome, param, cookie, i);
 			}
 		});
 	};
+	
+	
+	$scope.next = function() {
+		var parameter = {};
+		parameter = angular.copy($scope.parameter);
+		$scope.offset++;
+		parameter.offset = $scope.offset;
+		ServiceHome.search(parameter, cookie).then(function(response){
+			$scope.searchResult = response.data;
+			for(var i = 0; i < $scope.searchResult.length; i++) {
+				console.log("item: " + $scope.searchResult[i].id);
+				var param = {};
+				param.id = $scope.searchResult[i].id;
+				getPhoto($scope, ServiceHome, param, cookie, i);
+			}
+		});
+	};
+	
+	
+	$scope.previous = function() {
+		var parameter = {};
+		parameter = angular.copy($scope.parameter);
+		$scope.offset--;
+		parameter.offset = $scope.offset;
+		ServiceHome.search(parameter, cookie).then(function(response){
+			$scope.searchResult = response.data;
+			for(var i = 0; i < $scope.searchResult.length; i++) {
+				console.log("item: " + $scope.searchResult[i].id);
+				var param = {};
+				param.id = $scope.searchResult[i].id;
+				getPhoto($scope, ServiceHome, param, cookie, i);
+			}
+		});
+	};
+	
 
 });
 
@@ -62,3 +95,10 @@ home.factory('ServiceHome', [ '$http', function($http) {
 	
 	return service;
 } ]);
+
+
+var getPhoto = function($scope, ServiceHome, param, cookie, i){
+	ServiceHome.getPhoto(param, cookie).then(function(response){
+		$scope.searchResult[i].photo = angular.copy(response.data);
+	});
+}
