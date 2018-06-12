@@ -21,8 +21,8 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 	$scope.search = function() {
 		var parameter = {};
 		parameter = angular.copy($scope.parameter);
-		
-		ServiceHome.search(parameter).then(function(response){
+		parameter.offset = 0;
+		ServiceHome.search(parameter, cookie).then(function(response){
 			$scope.searchResult = response.data;
 		});
 	};
@@ -34,17 +34,13 @@ home.factory('ServiceHome', [ '$http', function($http) {
 	
 	service.getUserLock = function(cookie){
 		return $http.get('http://localhost:8080/WEB_Project/server/user/getlock', {
-
 		    headers: {'Authorization': 'WebProject='+cookie}
-
 		  });
 	}
 	
-	service.search = function(parameter){
+	service.search = function(parameter, cookie){
 		return $http.post('http://localhost:8080/WEB_Project/server/photo/search', parameter,{
-
 		    headers: {'Authorization': 'WebProject='+cookie}
-
 		  });
 	}
 	

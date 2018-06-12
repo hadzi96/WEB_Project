@@ -14,14 +14,20 @@
 </head>
 <body>
 
-	<div ng-controller="CtrlHome" style="text-align: center">
-		<form novalidate>
+	<div ng-controller="CtrlHome">
+		<form novalidate style="text-align: left">
 			<br /> <input type="text" ng-model="parameter.search"
 				placeholder="search"> <br /> <input type="text"
-				ng-model="parameter.searchValue" placeholder="searchValue">
+				ng-model="parameter.searchValue" placeholder="searchValue"><br />
 			<input type="text" ng-model="parameter.filter" placeholder="filter">
 			<button ng-click="search(parameter)">Search</button>
 		</form>
+
+		<ul>
+			<li ng-repeat="item in searchResult"><span>{{item.ime}}{{"
+					cene: " +item.cene}}</span> <br> <span>{{item.opis}}</span><br>
+				<br></li>
+		</ul>
 	</div>
 
 </body>
