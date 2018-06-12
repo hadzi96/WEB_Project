@@ -12,11 +12,12 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 	ServiceHome.getUserLock(cookie).then(function(response){
 		if(response.data == -1){
 			$window.location.href = "http://localhost:8080/WEB_Project/";
+		}else{
+			$scope.hide = false;
 		}
 		userLock = response.data;
 		console.log(userLock);
 	});
-	
 	
 	$scope.search = function() {
 		var parameter = {};
