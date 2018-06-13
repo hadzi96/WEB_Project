@@ -86,6 +86,17 @@ public class ControllerUser {
 	}
 
 	@GET
+	@Path("/type")
+	@Produces("text/json")
+	public Object getType(@HeaderParam("Authorization") Cookie cookie) {
+		try {
+			return service.getType(cookie.getValue());
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	@GET
 	@Path("/getlock")
 	@Produces("text/json")
 	public Integer getLock(@HeaderParam("Authorization") Cookie cookie) {

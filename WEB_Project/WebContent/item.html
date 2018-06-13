@@ -13,8 +13,15 @@
 </style>
 </head>
 <body ng-controller="CtrlItem" ng-init="hide=true;" ng-hide="hide">
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/test.html">Test</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/">Log out</a></td>
+		</tr>
+	</table>
 
-	<a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a>
 	<table style="border: 1px solid black;">
 		<tr>
 			<td>Ime: {{item.ime}}</td>

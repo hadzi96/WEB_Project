@@ -37,8 +37,13 @@ public class ControllerTest {
 	@Path("/send")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean send(@MultipartForm Test test, @HeaderParam("Authorization") Cookie cookie) {
-		return service.send(test, cookie.getValue());
+	public Object send(@MultipartForm Test test, @HeaderParam("Authorization") Cookie cookie) {
+		try {
+			return service.send(test, cookie.getValue());
+		} catch (Exception e) {
+			return false;
+		}
+
 	}
 
 	@GET

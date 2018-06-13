@@ -19,7 +19,7 @@ public class ServiceTest {
 		this.daoProvera = new DAOProveraUser();
 	}
 
-	public boolean send(Test test, String cookie) {
+	public Object send(Test test, String cookie) {
 		User user = daoProvera.getUser(cookie);
 		if (user == null)
 			return false;
@@ -36,7 +36,7 @@ public class ServiceTest {
 			filenames.add(fileName);
 			UtilsMethods.saveTestPhoto(photo, fileName);
 		}
-		
+
 		return dao.addPhoto(user.username, filenames);
 	}
 

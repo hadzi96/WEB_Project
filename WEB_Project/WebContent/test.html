@@ -1,0 +1,54 @@
+<!DOCTYPE html >
+<html ng-app="test">
+<head>
+<meta charset="UTF-8">
+<title>Item</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="test.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlTest" ng-init="hide=true;" ng-hide="hide">
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/test.html">Test</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/">Log out</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<input file-model="parameter.photo1" type="file" name="photo1">
+	<br>
+	<input file-model="parameter.photo2" type="file" name="photo2">
+	<br>
+	<input file-model="parameter.photo3" type="file" name="photo3">
+	<br>
+	<input file-model="parameter.photo4" type="file" name="photo4">
+	<br>
+	<input file-model="parameter.photo5" type="file" name="photo5">
+	<br>
+	<input file-model="parameter.photo6" type="file" name="photo6">
+	<br>
+	<input file-model="parameter.photo7" type="file" name="photo7">
+	<br>
+	<input file-model="parameter.photo8" type="file" name="photo8">
+	<br>
+	<input file-model="parameter.photo9" type="file" name="photo9">
+	<br>
+	<input file-model="parameter.photo10" type="file" name="photo10">
+	<br>
+
+	<br>
+	<button ng-click="sendTest(parameter)">Send Test</button>
+	<br>
+	<br>
+	{{message}}
+
+</body>
+</html>

@@ -91,6 +91,10 @@ public class ServiceUser {
 		return daoCard.getCards(username);
 	}
 
+	public Object getType(String cookie) {
+		return daoProvera.getUser(cookie).type;
+	}
+
 	public Integer getLock(String cookie) {
 		String username = daoProvera.getUser(cookie).username;
 		if (username == null)
