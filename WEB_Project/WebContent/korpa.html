@@ -1,0 +1,50 @@
+<!DOCTYPE html >
+<html ng-app="korpa">
+<head>
+<meta charset="UTF-8">
+<title>Item</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="korpa.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlKorpa" ng-init="hide=true;" ng-hide="hide">
+
+	<table style="border: 1px solid black;">
+		<tr ng-repeat="item in korpaItems track by $index">
+			<td ng-click="open(item.idSlike)" style="border: 1px solid black;"><img
+				data-ng-src="data:image/png;base64,{{item.photo}}" /></td>
+			<td style="border: 1px solid black;">{{item.ime}}</td>
+			<td style="border: 1px solid black;">Rezolucija:
+				{{item.rezolucija}}</td>
+			<td style="border: 1px solid black;">Cena: {{item.cena}}</td>
+		</tr>
+	</table>
+	<br>
+
+
+	<table>
+		<tr>
+			<td>Izaberi karticu:</td>
+			<td><select ng-model="parameter.creditCardOld">
+					<option ng-repeat="card in creditCards track by $index"
+						value={{card.number}}>{{card.number}}</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td>Unesi novu kreditnu karticu:</td>
+			<td><input type="number" ng-model="parameter.creditCardNew"
+				placeholder="Broj"></td>
+		</tr>
+	</table>
+	<br>
+	<button ng-click="buy(parameter)">Kupi sve u korpi</button>
+
+
+
+</body>
+</html>

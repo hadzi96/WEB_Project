@@ -27,9 +27,7 @@ item.controller('CtrlItem', function($scope, $window, ServiceItem) {
 			$scope.item = response.data;
 			var param = {};
 			param.id = $scope.item.id;
-			getPhoto($scope, ServiceItem, param, cookie);
-			$scope.hide = false;
-			
+			getPhoto($scope, ServiceItem, param, cookie);			
 		}
 	});
 
@@ -89,5 +87,6 @@ var getPhoto = function($scope, ServiceItem, param, cookie){
 		$scope.item.photo = angular.copy(response.data);
 		$scope.item.cene = $scope.item.cene.split(';');
 		$scope.item.rezolucije = $scope.item.rezolucije.split(';');
+		$scope.hide = false;
 	});
 }

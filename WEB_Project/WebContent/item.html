@@ -14,6 +14,7 @@
 </head>
 <body ng-controller="CtrlItem" ng-init="hide=true;" ng-hide="hide">
 
+	<a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a>
 	<table style="border: 1px solid black;">
 		<tr>
 			<td>Ime: {{item.ime}}</td>
@@ -50,8 +51,7 @@
 		</tr>
 	</table>
 	<button ng-click="addToKorpa(parameter)">Dodaj u korpu</button>
-	<br>
-	{{message}}
+	<br> {{message}}
 
 </body>
 </html>

@@ -43,7 +43,11 @@ public class ControllerKorpa {
 	@Path("/getKorpa")
 	@Produces("text/json")
 	public List<Item> getKorpa(@HeaderParam("Authorization") Cookie cookie) {
-		return service.getKorpa(cookie.getValue());
+		try {
+			return service.getKorpa(cookie.getValue());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	@POST
