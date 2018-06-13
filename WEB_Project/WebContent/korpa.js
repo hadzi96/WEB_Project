@@ -20,11 +20,12 @@ korpa.controller('CtrlKorpa', function($scope, $window, ServiceKorpa) {
 	$scope.message = "";
 	ServiceKorpa.getKorpa(cookie).then(function(response){
 		if(response.data == ""){
-			$window.location.href = "http://localhost:8080/WEB_Project/";
+			$scope.message = "Prazna korpa";
 		}else{
 			$scope.korpaItems = response.data;
-			if($scope.korpaItems.length == 0)
+			if($scope.korpaItems.length == 0){
 				$scope.message = "Prazna korpa";
+			}
 			
 			for(var i = 0; i < $scope.korpaItems.length; i++) {
 				var param ={};
@@ -51,15 +52,39 @@ korpa.controller('CtrlKorpa', function($scope, $window, ServiceKorpa) {
 	
 	
 	$scope.buy = function() {
+		$scope.message = "Kupovina u toku.. molimo vas sacekajte..";
 		console.log($scope.parameter);
 		
 		if($scope.parameter == null){
-			return;
+			$scope.message = "Kupovina Error! Proverite dali ste uneli sve potrebne parametre";
 		}else{
 			if($scope.parameter.creditCardNew == null){
-				//koristi staru
+				if($scope.parameter.creditCardOld != null){
+					var buyParam = {};
+					buyParam.optimisticLock = userLock;
+					buyParam.creditCard = $scope.parameter.creditCardOld;
+					ServiceKorpa.buyAll(buyParam, cookie).then(function(response){
+						$window.location.href = "http://localhost:8080/WEB_Project/korpa.html";
+					});
+				}else{
+					$scope.message = "Kupovina Error! Proverite dali ste uneli sve potrebne parametre";
+				}
 			}else{
-				//koristi novu
+				var cardParam = {};
+				cardParam.optimisticLock = userLock;
+				cardParam.creditCard = $scope.parameter.creditCardNew;
+				ServiceKorpa.addCard(cardParam, cookie).then(function(response){
+					if(response.data != "true"){
+						$scope.message = "Kupovina Error! Proverite dali ste uneli sve potrebne parametre";
+					}else{
+						var buyParam = {};
+						buyParam.optimisticLock = userLock;
+						buyParam.creditCard = $scope.parameter.creditCardNew;
+						ServiceKorpa.buyAll(buyParam, cookie).then(function(response){
+							$window.location.href = "http://localhost:8080/WEB_Project/korpa.html";
+						});
+					}
+				});
 			}
 		}
 		
@@ -98,6 +123,18 @@ korpa.factory('ServiceKorpa', [ '$http', function($http) {
 	
 	service.getCards = function(cookie){
 		return $http.get('http://localhost:8080/WEB_Project/server/user/getcards',{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.addCard = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/user/addcard', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+
+	service.buyAll = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/korpa/buy', parameter,{
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}

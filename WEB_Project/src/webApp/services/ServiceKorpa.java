@@ -97,8 +97,8 @@ public class ServiceKorpa {
 		for (int i = 0; i < fileNames.size(); i++) {
 			byte[] img = UtilsMethods.readFile("D:/Photos/" + fileNames.get(i) + ".png");
 			String rez = items.get(i).rezolucija;
-			int width = Integer.parseInt(rez.split("x")[0]);
-			int height = Integer.parseInt(rez.split("x")[1]);
+			int width = Integer.parseInt(rez.split("x")[0].trim());
+			int height = Integer.parseInt(rez.split("x")[1].trim());
 			img = UtilsMethods.scaleImage(img, width, height);
 
 			pictures.add(img);
