@@ -19,6 +19,16 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		console.log(userLock);
 	});
 	
+	ServiceHome.getUserType(cookie).then(function(response){
+		if(response.data == "prodavac"){
+			$scope.hideProdaja = false;
+		}
+		
+		if(response.data == "kupac"){
+			$scope.hideTest = false;
+		}
+	});
+	
 	$scope.search = function() {
 		var parameter = {};
 		parameter = angular.copy($scope.parameter);
@@ -95,6 +105,12 @@ home.factory('ServiceHome', [ '$http', function($http) {
 	
 	service.getPhoto = function(parameter, cookie){
 		return $http.post('http://localhost:8080/WEB_Project/server/photo/getphoto', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.getUserType = function(cookie){
+		return $http.get('http://localhost:8080/WEB_Project/server/user/type', {
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}

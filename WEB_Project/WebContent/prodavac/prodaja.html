@@ -1,0 +1,80 @@
+<!DOCTYPE html >
+<html ng-app="prodaja">
+<head>
+<meta charset="UTF-8">
+<title>Prodaja Slike</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="prodaja.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlProdaja"
+	ng-init="hide=true; hideC1=true; hideC2=true; hideC3=true; hideSend=true;"
+	ng-hide="hide">
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+			<td><a href="http://localhost:8080/WEB_Project/">Log out</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<table>
+		<tr>
+			<td>Ime:</td>
+			<td><input type="text" ng-model="parameter.ime"></td>
+		</tr>
+		<tr>
+			<td>Kategorija:</td>
+			<td><input type="text" ng-model="parameter.kategorija"></td>
+		</tr>
+		<tr>
+			<td>Keyword:</td>
+			<td><input type="text" ng-model="parameter.keyword"></td>
+		</tr>
+		<tr>
+			<td>opis:</td>
+			<td><textarea style="height: 150px; width: 300px;"
+					type="text;charset=utf-8" ng-model="parameter.opis"></textarea></td>
+		</tr>
+		<tr>
+			<td>mesto:</td>
+			<td><input type="text" ng-model="parameter.mesto"></td>
+		</tr>
+	</table>
+	<input file-model="parameter.photo" type="file" name="photo">
+
+	<br>
+	<br>
+	<table>
+		<tr ng-hide="hideC1">
+			<td>Rezolucija: 1920x1080 (50-100$)</td>
+			<td>Cena: <input type="number" ng-model="parameter.cena1"
+				min="50" max="100"></td>
+		</tr>
+		<tr ng-hide="hideC2">
+			<td>Rezolucija: 1600x900 (20-50$)</td>
+			<td>Cena: <input type="number" ng-model="parameter.cena2"
+				min="20" max="50"></td>
+		</tr>
+		<tr ng-hide="hideC3">
+			<td>Rezolucija: 1280x720 (5-20$)</td>
+			<td>Cena: <input type="number" ng-model="parameter.cena3"
+				min="5" max="20"></td>
+		</tr>
+	</table>
+
+
+	<br>
+	<br>
+	<br>
+	<button ng-hide="hideSend" ng-click="sendPhoto(parameter)">Send photo</button>
+	<br>
+	<br> {{message}}
+
+</body>
+</html>
