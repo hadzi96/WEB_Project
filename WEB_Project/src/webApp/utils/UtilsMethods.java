@@ -1,16 +1,15 @@
 package webApp.utils;
 
+import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Base64;
 import java.util.Random;
 
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 import javax.imageio.ImageIO;
 
 import com.google.common.io.Files;
@@ -227,12 +226,16 @@ public final class UtilsMethods {
 
 	static public byte[] scaleImage(byte[] data, int width, int height) {
 		try {
-			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
+			BufferedImage bsrc = ImageIO.read(new ByteArrayInputStream(data));
 
-			BufferedImage newImg = Thumbnails.of(img).size(width, height).asBufferedImage();
+			BufferedImage bdest = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g = bdest.createGraphics();
+			AffineTransform at = AffineTransform.getScaleInstance((double) width / bsrc.getWidth(),
+					(double) height / bsrc.getHeight());
+			g.drawRenderedImage(bsrc,at);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			ImageIO.write(newImg, "png", baos);
+			ImageIO.write(bdest, "png", baos);
 			baos.flush();
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();

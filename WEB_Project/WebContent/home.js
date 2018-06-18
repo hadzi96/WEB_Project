@@ -27,6 +27,10 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		if(response.data == "kupac"){
 			$scope.hideTest = false;
 		}
+		
+		if(response.data == "admin"){
+			$scope.hideAddOp = false;
+		}
 	});
 	
 	$scope.search = function() {

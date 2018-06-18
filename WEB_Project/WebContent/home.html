@@ -13,7 +13,7 @@
 </style>
 </head>
 <body ng-controller="CtrlHome"
-	ng-init="hide=true; parameter.search='ALL'; parameter.filter='None'; hideProdaja=true; hideTest=true;"
+	ng-init="hide=true; parameter.search='ALL'; parameter.filter='None'; hideProdaja=true; hideTest=true; hideAddOp=true;"
 	ng-hide="hide">
 
 	<table>
@@ -22,6 +22,7 @@
 			<td><a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a></td>
 			<td ng-hide="hideTest"><a href="http://localhost:8080/WEB_Project/test.html">Test</a></td>
 			<td ng-hide="hideProdaja"><a href="http://localhost:8080/WEB_Project/prodavac/prodaja.html">Prodaja</a></td>
+			<td ng-hide="hideAddOp"><a href="http://localhost:8080/WEB_Project/admin/addoperater.html">Dodaj Operatera</a></td>
 			<td><a href="http://localhost:8080/WEB_Project/">Log out</a></td>
 		</tr>
 	</table>

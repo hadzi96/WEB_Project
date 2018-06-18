@@ -39,7 +39,7 @@ prodaja.controller('CtrlProdaja', function($scope, $window, $interval, ServicePr
 		
 		ServiceProdaja.sendPhoto($scope.parameter, cookie).then(function(response){
 			if(response.data != true){
-				$scope.message = "Neuspesno slanje slike.. proverite dali ste uneli sve validne parametre";
+				$scope.message = "Neuspesno slanje slike.. proverite dali ste uneli sve validne parametre. Napomena: Maksimalno se može poslati 3 fotografije dnevno, a 8 nedeljno ";
 				console.log(response.data);
 			}else{
 				$scope.message = "Slika uspesno postavljena.. Operater ce je uskoro odobriti ili odbiti";
