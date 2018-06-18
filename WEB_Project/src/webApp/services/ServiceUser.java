@@ -1,5 +1,6 @@
 package webApp.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import webApp.dao.DAOCard;
@@ -63,10 +64,12 @@ public class ServiceUser {
 		if (res.success)
 			return res;
 		User operater = daoProvera.getUser(user.username, user.password);
-		if (operater == null)
+		if (operater == null) {
 			return res;
+		}
 		if (operater.type.equals("operater") && operater.isActive == false) {
 			res.message = "changePW";
+			res.success = true;
 		}
 
 		return res;
@@ -101,6 +104,28 @@ public class ServiceUser {
 			return null;
 
 		return dao.getLock(username);
+	}
+
+	public List<User> getOperaters(String cookie) {
+		User user = daoProvera.getUser(cookie);
+		if (user == null || !user.type.equals("admin"))
+			return null;
+
+		return dao.getUsersByType("operater");
+
+	}
+
+	public List<User> getUsers(String cookie) {
+		User user = daoProvera.getUser(cookie);
+		if (user == null || !user.type.equals("operater"))
+			return null;
+
+		List<User> list = new ArrayList<User>();
+		list.addAll(dao.getUsersByType("kupac"));
+		list.addAll(dao.getUsersByType("prodavac"));
+
+		return list;
+
 	}
 
 	public boolean addoperater(AddOpReq req, String cookie) {

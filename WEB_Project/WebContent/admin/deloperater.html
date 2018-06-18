@@ -1,18 +1,18 @@
 <!DOCTYPE html >
-<html ng-app="addOp">
+<html ng-app="delOp">
 <head>
 <meta charset="UTF-8">
 <title>Dodaj Operatera</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
-<script type="text/javascript" src="addoperater.js"></script>
+<script type="text/javascript" src="deloperater.js"></script>
 <style>
 [ng\:cloak], [ng-cloak], .ng-cloak {
 	display: none;
 }
 </style>
 </head>
-<body ng-controller="CtrlAddop" ng-hide="hide">
+<body ng-controller="CtrlDelOp" ng-hide="hide">
 
 	<table>
 		<tr>
@@ -22,33 +22,20 @@
 
 	<br>
 	<br>
-	<table>
+	<table ng-repeat="op in resultSet" style="border: 1px solid black;">
 		<tr>
-			<td>Username:</td>
-			<td><input type="text" ng-model="parameter.username"></td>
+			<td width=250 style="border: 1px solid black;">Username:
+				{{op.username}} <br> Email: {{op.email}}<br> <br>
+			</td>
+			<td style="border: 1px solid black;">
+				<button ng-click="delOp(op.username)">Delete</button>
+			</td>
 		</tr>
-		<tr>
-			<td>Password:</td>
-			<td><input type="
-				text" ng-model="parameter.password"></td>
-		</tr>
-		<tr>
-			<td>Email:</td>
-			<td><input type="
-				text" ng-model="parameter.email"></td>
-		</tr>
-		<tr>
-			<td>Drzava:</td>
-			<td><input type="
-				text" ng-model="parameter.drzava"></td>
-		</tr>
-
 	</table>
 
 	<br>
 	<br>
-	<button ng-click="addOp(parameter)">Dodaj</button>
-	<br><br> {{message}}
+	{{message}}
 
 </body>
 </html>

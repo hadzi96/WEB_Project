@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import webApp.entities.Photo;
 import webApp.entities.User;
 import webApp.responses.LoginResponse;
 import webApp.utils.CookieMethods;
@@ -253,5 +256,33 @@ public class DAOUser extends DAO<User> {
 		}
 
 		return false;
+	}
+
+	public List<User> getUsersByType(String type) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format("SELECT * FROM user WHERE type='%s';", type);
+
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+			List<User> list = new ArrayList<User>();
+			while (rs.next()) {
+				list.add(readFromResultSet(rs));
+			}
+			closeStat(st);
+			closeResultSet(rs);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+
 	}
 }

@@ -65,8 +65,9 @@ public class ControllerUser {
 		if (res.success == false)
 			return null;
 		NewCookie cookie = new NewCookie("WebProject", res.cookie);
-		if (res.message == null)
+		if (res.message == null) {
 			res.message = res.cookie;
+		}
 		return Response.ok(res.message).cookie(cookie).build();
 	}
 
@@ -104,6 +105,28 @@ public class ControllerUser {
 			return service.getLock(cookie.getValue());
 		} catch (Exception e) {
 			return -1;
+		}
+	}
+
+	@GET
+	@Path("/getoperaters")
+	@Produces("text/json")
+	public List<User> getOperaters(@HeaderParam("Authorization") Cookie cookie) {
+		try {
+			return service.getOperaters(cookie.getValue());
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@GET
+	@Path("/getusers")
+	@Produces("text/json")
+	public List<User> getUsers(@HeaderParam("Authorization") Cookie cookie) {
+		try {
+			return service.getUsers(cookie.getValue());
+		} catch (Exception e) {
+			return null;
 		}
 	}
 

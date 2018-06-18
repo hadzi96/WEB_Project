@@ -1,6 +1,6 @@
-var addOp = angular.module('addOp', []);
+var delOp = angular.module('delOp', []);
 
-addOp.controller('CtrlAddop', function($scope, $window, ServiceAddOp) {
+delOp.controller('CtrlDelOp', function($scope, $window, ServiceDelOp) {
 	$scope.hide = true;
 	var cookie = {};
 	cookie = $window.localStorage.getItem("webProj");
@@ -9,20 +9,27 @@ addOp.controller('CtrlAddop', function($scope, $window, ServiceAddOp) {
 		$window.location.href = "http://localhost:8080/WEB_Project/";
 	}
 	else{
-		$scope.hide = false;
+		ServiceDelOp.getOperaters(cookie).then(function(response){
+			$scope.resultSet = response.data;
+			$scope.hide = false;
+		});
 	}
 	
+	
+	
 	$scope.message = "";
-	$scope.addOp = function(){
-		if($scope.parameter == null){
-			$scope.message = "Dodavanje neuspesno";
+	$scope.delOp = function(username){
+		if(username == null){
+			$scope.message = "Brisanje neuspesno";
 			return;
 		}else{
-			ServiceAddOp.addOp($scope.parameter, cookie).then(function(response){
+			var param = {};
+			param.username = username;
+			ServiceDelOp.delOp(param, cookie).then(function(response){
 				if(response.data == "true"){
-					$scope.message = "Uspesno ste dodali operatera";
+					$window.location.href = "http://localhost:8080/WEB_Project/admin/deloperater.html";
 				}else{
-					$scope.message = "Dodavanje neuspesno";
+					$scope.message = "Brisanje neuspesno";
 				}
 			});
 		}
@@ -32,11 +39,17 @@ addOp.controller('CtrlAddop', function($scope, $window, ServiceAddOp) {
 
 });
 
-addOp.factory('ServiceAddOp', [ '$http', function($http) {
+delOp.factory('ServiceDelOp', [ '$http', function($http) {
 	var service = {};
 	
-	service.addOp = function(parameter, cookie){
-		return $http.post('http://localhost:8080/WEB_Project/server/user/addoperater', parameter,{
+	service.delOp = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/user/deloperater', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.getOperaters = function(cookie){
+		return $http.get('http://localhost:8080/WEB_Project/server/user/getoperaters',{
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}
