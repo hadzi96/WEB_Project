@@ -130,7 +130,7 @@ public class ServicePhoto {
 		byte[] img = UtilsMethods.readFile(filePath);
 
 		// konvertuj u malu rezoluciju pre nego sto posaljes
-		img = UtilsMethods.scaleImage(img, 100, 100);
+		img = UtilsMethods.scaleImage(img, 200, 200);
 
 		return img;
 	}

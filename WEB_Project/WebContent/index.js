@@ -9,9 +9,13 @@ login.controller('CtrlLogin', function($scope, $window, ServiceLogin) {
 		
 		ServiceLogin.login(user).then(function(response){
 			if(response.data != ''){
-				
-				$window.localStorage.setItem("webProj",response.data);
-		        $window.location.href = "http://localhost:8080/WEB_Project/home.html";
+				if(response.data == 'changePW'){
+					console.log("usoo");
+					$window.location.href = "http://localhost:8080/WEB_Project/operater/changepw.html";
+				}else{
+					$window.localStorage.setItem("webProj",response.data);
+			        $window.location.href = "http://localhost:8080/WEB_Project/home.html";
+				}
 			}
 			else{
 				$scope.message = 'Login failed!';

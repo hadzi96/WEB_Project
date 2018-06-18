@@ -1,0 +1,43 @@
+<!DOCTYPE html >
+<html ng-app="odobri">
+<head>
+<meta charset="UTF-8">
+<title>Odobravanje slika</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="odobri.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlOdobri" ng-hide="hide">
+
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<br> Lista Neodobrenih Slika:
+	<br>
+	<table ng-repeat="item in resultSet" style="border: 1px solid black;">
+		<tr>
+			<td>Ime: {{item.ime}}</td>
+		</tr>
+		<tr>
+			<td>Autor: {{item.autor}}</td>
+		</tr>
+		<tr>
+			<td ng-click="open(item.id)"><img
+				data-ng-src="data:image/png;base64,{{item.photo}}" /></td>
+		</tr>
+		<tr>
+			<td><button ng-click="odobri(item.id)">Odobri</button></td>
+		</tr>
+	</table>
+
+</body>
+</html>

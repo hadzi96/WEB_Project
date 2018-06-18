@@ -1,0 +1,29 @@
+<!DOCTYPE html >
+<html ng-app="changepw">
+<head>
+<meta charset="UTF-8">
+<title>Change Password</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="changepw.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlChangePW">
+
+	<form novalidate style="text-align: center">
+		Promena Lozinke za Operatere <br> <br>
+		Username:<br /> <input type="text" ng-model="parameter.username"><br />
+		Password:<br /> <input type="password" ng-model="parameter.password"><br />
+		New Password:<br /> <input type="password" ng-model="parameter.newpassword"><br />
+		<br />
+		<button ng-click="change(parameter)">Change Password</button><br>
+		{{message}}
+	</form>
+	<br> 
+
+</body>
+</html>

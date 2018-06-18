@@ -31,6 +31,10 @@ home.controller('CtrlHome', function($scope, $window, ServiceHome) {
 		if(response.data == "admin"){
 			$scope.hideAddOp = false;
 		}
+		
+		if(response.data == "operater"){
+			$scope.hideOperater = false;
+		}
 	});
 	
 	$scope.search = function() {
