@@ -24,7 +24,7 @@ public class DAOProveraUser extends DAO<User> {
 
 		try {
 			PreparedStatement st = conn
-					.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s'", username));
+					.prepareStatement(String.format("SELECT * FROM user WHERE username = '%s' AND isActive = true", username));
 
 			ResultSet rs = st.executeQuery();
 

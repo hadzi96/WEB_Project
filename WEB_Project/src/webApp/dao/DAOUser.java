@@ -241,8 +241,7 @@ public class DAOUser extends DAO<User> {
 
 		try {
 			String statement = String.format(
-					"UPDATE user SET isActive = false WHERE username = '%s' AND type != 'admin' AND type != 'operater';"
-							+ "DELETE FROM cookie WHERE username = '%s';",
+					"UPDATE user SET isActive = false WHERE username = '%s' AND type != 'admin' AND type != 'operater';",
 					username, username);
 			PreparedStatement st = conn.prepareStatement(statement);
 
