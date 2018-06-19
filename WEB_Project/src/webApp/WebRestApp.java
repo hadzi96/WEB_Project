@@ -8,6 +8,7 @@ import javax.ws.rs.core.Application;
 
 import webApp.controllers.ControllerKorpa;
 import webApp.controllers.ControllerPhoto;
+import webApp.controllers.ControllerStatistika;
 import webApp.controllers.ControllerTest;
 import webApp.controllers.ControllerUser;
 
@@ -20,6 +21,7 @@ public class WebRestApp extends Application {
 		classes.add(ControllerPhoto.class);
 		classes.add(ControllerKorpa.class);
 		classes.add(ControllerTest.class);
+		classes.add(ControllerStatistika.class);
 		return classes;
 	}
 }
