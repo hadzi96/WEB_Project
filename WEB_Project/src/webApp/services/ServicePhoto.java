@@ -131,7 +131,8 @@ public class ServicePhoto {
 
 		// konvertuj u malu rezoluciju pre nego sto posaljes
 		img = UtilsMethods.scaleImage(img, 426, 240);
-
+		img = UtilsMethods.watermark(img);
+		
 		return img;
 	}
 

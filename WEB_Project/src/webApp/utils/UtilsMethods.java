@@ -14,7 +14,8 @@ import javax.imageio.ImageIO;
 
 import com.google.common.io.Files;
 
-import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.filters.Watermark;
+import net.coobird.thumbnailator.geometry.Positions;
 
 /**
  * Klasa sa pomocnim metodam
@@ -232,10 +233,32 @@ public final class UtilsMethods {
 			Graphics2D g = bdest.createGraphics();
 			AffineTransform at = AffineTransform.getScaleInstance((double) width / bsrc.getWidth(),
 					(double) height / bsrc.getHeight());
-			g.drawRenderedImage(bsrc,at);
+			g.drawRenderedImage(bsrc, at);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			ImageIO.write(bdest, "png", baos);
+			baos.flush();
+			byte[] imageInByte = baos.toByteArray();
+			baos.close();
+
+			return imageInByte;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	static public byte[] watermark(byte[] data) {
+		try {
+			BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(data));
+			BufferedImage watermarkImage = ImageIO.read(new ByteArrayInputStream(readFile("D:/watermark/watermark.png")));
+
+			Watermark filter = new Watermark(Positions.CENTER, watermarkImage, 0.1f);
+			BufferedImage watermarkedImage = filter.apply(originalImage);
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(watermarkedImage, "png", baos);
 			baos.flush();
 			byte[] imageInByte = baos.toByteArray();
 			baos.close();
