@@ -1,0 +1,37 @@
+<!DOCTYPE html >
+<html ng-app="test">
+<head>
+<meta charset="UTF-8">
+<title>Test</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="test.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlTest" ng-hide="hide">
+
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<br>
+	<div style="text-align: center">
+		Slika {{counter+1}} <br> <img
+			data-ng-src="data:image/png;base64,{{photo}}" /> <br>
+		<button ng-click="previous()"><</button>
+		<button ng-click="next()">></button>
+		<br> <br> <input type="number" step=".01"
+			ng-model="parameter.ocena" placeholder="ocena">
+		<button ng-click="oceni(parameter)">Submit</button>
+		<br>{{message}}
+	</div>
+
+</body>
+</html>

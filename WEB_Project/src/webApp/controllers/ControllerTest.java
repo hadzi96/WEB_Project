@@ -65,7 +65,7 @@ public class ControllerTest {
 	@POST
 	@Path("/getphoto")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public String getPhoto(GetPhotoReq req, @HeaderParam("Authorization") Cookie cookie) {
 		byte[] file = service.getTestPhoto(req.fileName, cookie.getValue());
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html >
+<html ng-app="oceniTest">
+<head>
+<meta charset="UTF-8">
+<title>Ocenjivanje Testova</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="ocenitest.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlOceniTest" ng-hide="hide">
+
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<br>
+	Lista Testova:<br>
+	<table ng-repeat="test in resultSet" style="border: 1px solid black;">
+		<tr>
+			<td width=250 style="border: 1px solid black;">Username:
+				{{test.user}}<br><br>
+			</td>
+			<td style="border: 1px solid black;">
+				<button ng-click="open(test)">Open</button>
+			</td>
+		</tr>
+	</table>
+
+	<br>
+	<br>
+	{{message}}
+
+</body>
+</html>
