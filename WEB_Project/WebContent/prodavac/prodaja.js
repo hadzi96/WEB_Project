@@ -19,16 +19,19 @@ prodaja.controller('CtrlProdaja', function($scope, $window, $interval, ServicePr
 	});
 	
 	ServiceProdaja.getUserType(cookie).then(function(response){
-		if(response.data != "prodavac"){
-			if(response.data == "admin"){
-				$window.location.href = "http://localhost:8080/WEB_Project/admin/home.html";
-			}
-			
+		if(response.data != "prodavac"){			
 			$window.location.href = "http://localhost:8080/WEB_Project/home.html";
 		}else{
 			$scope.hide = false;
 		}
 		console.log(response.data);
+	});
+	
+	ServiceProdaja.getCards(cookie).then(function(response){
+		console.log(response.data);
+		if(response.data.length == 0){
+			$scope.hideKartica = false;
+		}
 	});
 	
 	$scope.parameter = {};
@@ -37,16 +40,38 @@ prodaja.controller('CtrlProdaja', function($scope, $window, $interval, ServicePr
 		$scope.parameter.rezolucije = $scope.parameter.rezolucije.substring(0, $scope.parameter.rezolucije.length -1);
 		console.log($scope.parameter);
 		
-		ServiceProdaja.sendPhoto($scope.parameter, cookie).then(function(response){
-			if(response.data != true){
-				$scope.message = "Neuspesno slanje slike.. proverite dali ste uneli sve validne parametre. Napomena: Maksimalno se može poslati 3 fotografije dnevno, a 8 nedeljno ";
-				console.log(response.data);
-			}else{
-				$scope.message = "Slika uspesno postavljena.. Operater ce je uskoro odobriti ili odbiti";
-				console.log(response.data);
-			}
-			
-		});
+		if($scope.hideKartica == false){
+			var cardParam = {};
+			cardParam.optimisticLock = userLock;
+			cardParam.creditCard = $scope.parameter.kartica;
+			ServiceProdaja.addCard(cardParam, cookie).then(function(response){
+				if(response.data != "true"){
+					$scope.message = "Error.. greska prilikom dodavanje kreditne kartice";
+				}else{
+					ServiceProdaja.sendPhoto($scope.parameter, cookie).then(function(response){
+						if(response.data != true){
+							$scope.message = "Neuspesno slanje slike.. proverite dali ste uneli sve validne parametre. Napomena: Maksimalno se može poslati 3 fotografije dnevno, a 8 nedeljno ";
+							console.log(response.data);
+						}else{
+							$scope.message = "Slika uspesno postavljena.. Operater ce je uskoro odobriti ili odbiti";
+							console.log(response.data);
+						}
+						
+					});
+				}
+			});
+		}else{
+			ServiceProdaja.sendPhoto($scope.parameter, cookie).then(function(response){
+				if(response.data != true){
+					$scope.message = "Neuspesno slanje slike.. proverite dali ste uneli sve validne parametre. Napomena: Maksimalno se može poslati 3 fotografije dnevno, a 8 nedeljno ";
+					console.log(response.data);
+				}else{
+					$scope.message = "Slika uspesno postavljena.. Operater ce je uskoro odobriti ili odbiti";
+					console.log(response.data);
+				}
+				
+			});
+		}
 	};
 	
 	
@@ -102,6 +127,18 @@ prodaja.factory('ServiceProdaja', [ '$http', function($http) {
             	"Authorization": "WebProject="+cookie}
         });
 		
+	}
+	
+	service.getCards = function(cookie){
+		return $http.get('http://localhost:8080/WEB_Project/server/user/getcards',{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.addCard = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/user/addcard', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
 	}
 	
 	return service;

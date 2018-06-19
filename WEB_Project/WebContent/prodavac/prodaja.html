@@ -13,7 +13,7 @@
 </style>
 </head>
 <body ng-controller="CtrlProdaja"
-	ng-init="hide=true; hideC1=true; hideC2=true; hideC3=true; hideSend=true;"
+	ng-init="hide=true; hideC1=true; hideC2=true; hideC3=true; hideSend=true; hideKartica=true;"
 	ng-hide="hide">
 	<table>
 		<tr>
@@ -23,6 +23,15 @@
 	</table>
 
 	<br>
+	<table>
+		<tr ng-hide="hideKartica">
+			<td>Kreditna kartica:</td>
+			<td><input type="nummber" ng-model="parameter.kartica" max=9999999999999999 min=0></td>
+		</tr>
+	</table>
+	<br>
+	<br>
+
 	<table>
 		<tr>
 			<td>Ime:</td>
@@ -72,7 +81,8 @@
 	<br>
 	<br>
 	<br>
-	<button ng-hide="hideSend" ng-click="sendPhoto(parameter)">Send photo</button>
+	<button ng-hide="hideSend" ng-click="sendPhoto(parameter)">Send
+		photo</button>
 	<br>
 	<br> {{message}}
 
