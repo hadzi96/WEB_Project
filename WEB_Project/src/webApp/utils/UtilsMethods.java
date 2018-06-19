@@ -254,7 +254,7 @@ public final class UtilsMethods {
 			BufferedImage originalImage = ImageIO.read(new ByteArrayInputStream(data));
 			BufferedImage watermarkImage = ImageIO.read(new ByteArrayInputStream(readFile("D:/watermark/watermark.png")));
 
-			Watermark filter = new Watermark(Positions.CENTER, watermarkImage, 0.1f);
+			Watermark filter = new Watermark(Positions.CENTER, watermarkImage, 0.6f);
 			BufferedImage watermarkedImage = filter.apply(originalImage);
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
