@@ -37,7 +37,7 @@ test.controller('CtrlTest', function($scope, $window, ServiceTest) {
 		parameter = angular.copy($scope.parameter);
 
 		ServiceTest.sendTest($scope.parameter, cookie).then(function(response){
-			if(response.data == "true"){
+			if(response.data == "true" || response.data == true){
 				$scope.message = "Test uspesno poslat.. operater ce uskoro oceniti Vas test"
 			}else{
 				$scope.message = "Greska prilikom slanja testa:" +

@@ -82,25 +82,25 @@ public class Test {
 	}
 
 	public boolean check() {
-		if (photo1 == null)
+		if (photo1 == null || photo1.length < 100)
 			return false;
-		if (photo2 == null)
+		if (photo2 == null || photo2.length < 100)
 			return false;
-		if (photo3 == null)
+		if (photo3 == null || photo3.length < 100)
 			return false;
-		if (photo4 == null)
+		if (photo4 == null || photo4.length < 100)
 			return false;
-		if (photo5 == null)
+		if (photo5 == null || photo5.length < 100)
 			return false;
-		if (photo6 == null)
+		if (photo6 == null || photo6.length < 100)
 			return false;
-		if (photo7 == null)
+		if (photo7 == null || photo7.length < 100)
 			return false;
-		if (photo8 == null)
+		if (photo8 == null || photo8.length < 100)
 			return false;
-		if (photo9 == null)
+		if (photo9 == null || photo9.length < 100)
 			return false;
-		if (photo10 == null)
+		if (photo10 == null || photo10.length < 100)
 			return false;
 
 		photos.add(photo1);
