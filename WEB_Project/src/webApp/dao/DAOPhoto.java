@@ -208,7 +208,7 @@ public class DAOPhoto extends DAO<Photo> {
 		return null;
 
 	}
-	
+
 	public List<Photo> getPhotosFromWeek(String autor) {
 		Connection conn = createConnection();
 		if (conn == null)
@@ -234,6 +234,54 @@ public class DAOPhoto extends DAO<Photo> {
 
 		return null;
 
+	}
+
+	public boolean containsKupljene(int idSlike, String buyer) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format("SELECT * FROM kupljene WHERE idSlike=%d AND buyer='%s';", idSlike, buyer);
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+
+			boolean state = false;
+			if (rs.next()) {
+				state = true;
+			}
+
+			closeStat(st);
+			closeResultSet(rs);
+			return state;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
+	public boolean oceni(int idSlike, double ocena) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format("UPDATE photo SET ocena = (ocena+%4.2f)/2 where id = %d;", ocena, idSlike);
+			PreparedStatement st = conn.prepareStatement(statement);
+			st.execute();
+
+			closeStat(st);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
 	}
 
 }

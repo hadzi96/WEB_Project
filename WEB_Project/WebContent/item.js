@@ -48,6 +48,19 @@ item.controller('CtrlItem', function($scope, $window, ServiceItem) {
 			$scope.message = "Dodavanje u korpu Error";
 		}
 	}
+	
+	$scope.ocenaMessage= "";
+	$scope.oceni = function(){
+		$scope.ocenaParam.idSlike = $scope.item.id;
+		
+		ServiceItem.oceni($scope.ocenaParam, cookie).then(function(response){
+			if(response.data == "true" || response.data == true){
+				$scope.ocenaMessage= "Uspesno ocenjena";
+			}else{
+				$scope.ocenaMessage= "Neuspesna ocenjivanje. Napomena: mogu samo kupljene slike da se ocenjuju";
+			}
+		});
+	}
 
 });
 
@@ -74,6 +87,12 @@ item.factory('ServiceItem', [ '$http', function($http) {
 	
 	service.addToKorpa = function(parameter, cookie){
 		return $http.post('http://localhost:8080/WEB_Project/server/korpa/addItem', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.oceni = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/photo/oceni', parameter,{
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}

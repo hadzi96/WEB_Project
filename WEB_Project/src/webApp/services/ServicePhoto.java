@@ -1,17 +1,14 @@
 package webApp.services;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import webApp.dao.DAOPhoto;
 import webApp.dao.DAOProveraUser;
 import webApp.entities.File;
 import webApp.entities.Photo;
 import webApp.entities.User;
+import webApp.reqests.OceniPhotoReq;
 import webApp.reqests.OdobriReq;
 import webApp.reqests.OpenItemReq;
 import webApp.reqests.SearchItemReq;
@@ -132,7 +129,7 @@ public class ServicePhoto {
 		// konvertuj u malu rezoluciju pre nego sto posaljes
 		img = UtilsMethods.scaleImage(img, 426, 240);
 		img = UtilsMethods.watermark(img);
-		
+
 		return img;
 	}
 
@@ -156,5 +153,17 @@ public class ServicePhoto {
 			return false;
 
 		return dao.odobri(req.id);
+	}
+
+	public boolean oceni(OceniPhotoReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
+		if (user == null)
+			return false;
+
+		if (dao.containsKupljene(req.idSlike, user.username) == false) {
+			return false;
+		}
+
+		return dao.oceni(req.idSlike, req.ocena);
 	}
 }

@@ -21,6 +21,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import webApp.entities.File;
 import webApp.entities.Photo;
+import webApp.reqests.OceniPhotoReq;
 import webApp.reqests.OdobriReq;
 import webApp.reqests.OpenItemReq;
 import webApp.reqests.SearchItemReq;
@@ -91,5 +92,13 @@ public class ControllerPhoto {
 	@Consumes("application/json")
 	public boolean odobri(OdobriReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.odobri(req, cookie.getValue());
+	}
+
+	@POST
+	@Path("/oceni")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean oceni(OceniPhotoReq req, @HeaderParam("Authorization") Cookie cookie) {
+		return service.oceni(req, cookie.getValue());
 	}
 }

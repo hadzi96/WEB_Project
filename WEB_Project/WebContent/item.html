@@ -59,6 +59,12 @@
 	</table>
 	<button ng-click="addToKorpa(parameter)">Dodaj u korpu</button>
 	<br> {{message}}
+	<br>
+	<br>
+	<input type="number" step=".01" ng-model="ocenaParam.ocena"
+		placeholder="ocena">
+	<button ng-click="oceni(ocenaParam)">oceni</button>
+	<br>{{ocenaMessage}}
 
 </body>
 </html>
