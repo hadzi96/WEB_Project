@@ -17,11 +17,13 @@ import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
 
 import webApp.entities.Card;
+import webApp.entities.Comment;
 import webApp.entities.User;
 import webApp.reqests.AddCardReq;
 import webApp.reqests.AddOpReq;
 import webApp.reqests.BlockReq;
 import webApp.reqests.ChangePWReq;
+import webApp.reqests.CommentReq;
 import webApp.reqests.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.services.ServiceUser;
@@ -160,6 +162,25 @@ public class ControllerUser {
 	@Consumes("application/json")
 	public boolean block(BlockReq req, @HeaderParam("Authorization") Cookie cookie) {
 		return service.block(req, cookie.getValue());
+	}
+
+	@POST
+	@Path("/comment")
+	@Produces("text/json")
+	@Consumes("application/json")
+	public boolean comment(CommentReq req, @HeaderParam("Authorization") Cookie cookie) {
+		return service.comment(req, cookie.getValue());
+	}
+
+	@GET
+	@Path("/getCeomments")
+	@Produces("text/json")
+	public List<Comment> getComments(@HeaderParam("Authorization") Cookie cookie) {
+		try {
+			return service.getComments(cookie.getValue());
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

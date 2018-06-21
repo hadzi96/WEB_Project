@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import webApp.entities.Comment;
 import webApp.entities.Photo;
 import webApp.entities.User;
 import webApp.responses.LoginResponse;
@@ -284,4 +285,86 @@ public class DAOUser extends DAO<User> {
 		return null;
 
 	}
+
+	public boolean containsKupljene(String buyer, String autor) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format("SELECT * FROM kupljene WHERE buyer='%s' AND autor='%s';", buyer, autor);
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+
+			boolean state = false;
+			if (rs.next()) {
+				state = true;
+			}
+
+			closeStat(st);
+			closeResultSet(rs);
+			return state;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
+	public boolean comment(String sender, String receiver, String message) {
+		Connection conn = createConnection();
+		if (conn == null)
+			return false;
+
+		try {
+			String statement = String.format(
+					"INSERT INTO komentari (`sender`, `receiver`, `message`) VALUES ('%s','%s','%s')", sender, receiver,
+					message);
+			PreparedStatement st = conn.prepareStatement(statement);
+			st.execute();
+
+			closeStat(st);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return false;
+	}
+
+	public List<Comment> getComments(String receiver) {
+		Connection conn = createConnection();
+
+		if (conn == null)
+			return null;
+
+		try {
+			String statement = String.format("SELECT * FROM komentari WHERE receiver='%s';", receiver);
+
+			PreparedStatement st = conn.prepareStatement(statement);
+			ResultSet rs = st.executeQuery();
+			List<Comment> list = new ArrayList<Comment>();
+			while (rs.next()) {
+				Comment comment = new Comment();
+				comment.sender = rs.getString("sender");
+				comment.message = rs.getString("message");
+				list.add(comment);
+			}
+			closeStat(st);
+			closeResultSet(rs);
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(conn);
+		}
+
+		return null;
+
+	}
+
 }

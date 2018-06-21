@@ -7,11 +7,13 @@ import webApp.dao.DAOCard;
 import webApp.dao.DAOProveraUser;
 import webApp.dao.DAOUser;
 import webApp.entities.Card;
+import webApp.entities.Comment;
 import webApp.entities.User;
 import webApp.reqests.AddCardReq;
 import webApp.reqests.AddOpReq;
 import webApp.reqests.BlockReq;
 import webApp.reqests.ChangePWReq;
+import webApp.reqests.CommentReq;
 import webApp.reqests.DelOpReq;
 import webApp.responses.LoginResponse;
 import webApp.utils.EmailSender;
@@ -182,6 +184,29 @@ public class ServiceUser {
 			return false;
 
 		return dao.block(req.username);
+	}
+
+	public boolean comment(CommentReq req, String cookie) {
+		User user = daoProvera.getUser(cookie);
+		if (user == null)
+			return false;
+
+		if (dao.containsKupljene(user.username, req.receiver) == false) {
+			return false;
+		}
+
+		return dao.comment(user.username, req.receiver, req.message);
+	}
+
+	public List<Comment> getComments(String cookie) {
+		User user = daoProvera.getUser(cookie);
+		if (user == null)
+			return null;
+
+		if (!user.type.equals("prodavac"))
+			return null;
+
+		return dao.getComments(user.username);
 	}
 
 }
