@@ -61,6 +61,19 @@ item.controller('CtrlItem', function($scope, $window, ServiceItem) {
 			}
 		});
 	}
+	
+	$scope.komentarMessage= "";
+	$scope.send = function(){
+		$scope.komentarParam.receiver = $scope.item.autor;
+		
+		ServiceItem.send($scope.komentarParam, cookie).then(function(response){
+			if(response.data == "true" || response.data == true){
+				$scope.komentarMessage= "Uspesno slanje";
+			}else{
+				$scope.komentarMessage= "Neuspesna slanje. Napomena: Mogu se komentarisati autori od kojih je kupljena slika";
+			}
+		});
+	}
 
 });
 
@@ -93,6 +106,12 @@ item.factory('ServiceItem', [ '$http', function($http) {
 	
 	service.oceni = function(parameter, cookie){
 		return $http.post('http://localhost:8080/WEB_Project/server/photo/oceni', parameter,{
+		    headers: {'Authorization': 'WebProject='+cookie}
+		  });
+	}
+	
+	service.send = function(parameter, cookie){
+		return $http.post('http://localhost:8080/WEB_Project/server/user/comment', parameter,{
 		    headers: {'Authorization': 'WebProject='+cookie}
 		  });
 	}

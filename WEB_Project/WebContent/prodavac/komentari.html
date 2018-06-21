@@ -1,0 +1,36 @@
+<!DOCTYPE html >
+<html ng-app="komentari">
+<head>
+<meta charset="UTF-8">
+<title>Komentari Kupaca</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.10/angular.min.js"></script>
+<script type="text/javascript" src="komentari.js"></script>
+<style>
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none;
+}
+</style>
+</head>
+<body ng-controller="CtrlKomentari" ng-hide="hide">
+
+	<table>
+		<tr>
+			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
+		</tr>
+	</table>
+
+	<br>
+	<br> Lista Komentara kupaca:
+	<br>
+	<table ng-repeat="kom in resultSet" style="border: 1px solid black;">
+		<tr>
+			<td>Kupac: {{kom.sender}}</td>
+		</tr>
+		<tr>
+			<td>Komentar: {{kom.message}}</td>
+		</tr>
+	</table>
+
+</body>
+</html>

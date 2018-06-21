@@ -19,7 +19,7 @@ prodaja.controller('CtrlProdaja', function($scope, $window, $interval, ServicePr
 	});
 	
 	ServiceProdaja.getUserType(cookie).then(function(response){
-		if(response.data != "prodavac"){			
+		if(response.data != "prodavac"){
 			$window.location.href = "http://localhost:8080/WEB_Project/home.html";
 		}else{
 			$scope.hide = false;

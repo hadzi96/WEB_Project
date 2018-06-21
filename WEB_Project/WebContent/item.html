@@ -17,7 +17,6 @@
 		<tr>
 			<td><a href="http://localhost:8080/WEB_Project/home.html">Home</a></td>
 			<td><a href="http://localhost:8080/WEB_Project/korpa.html">Korpa</a></td>
-			<td><a href="http://localhost:8080/WEB_Project/test.html">Test</a></td>
 			<td><a href="http://localhost:8080/WEB_Project/">Log out</a></td>
 		</tr>
 	</table>
@@ -61,10 +60,20 @@
 	<br> {{message}}
 	<br>
 	<br>
+	<br>
 	<input type="number" step=".01" ng-model="ocenaParam.ocena"
 		placeholder="ocena">
 	<button ng-click="oceni(ocenaParam)">oceni</button>
 	<br>{{ocenaMessage}}
+
+	<br><br>
+	<textarea style="height: 150px; width: 300px;"
+		type="text;charset=utf-8" ng-model="komentarParam.message"
+		placeholder="Komentar Autoru"></textarea>
+	<br>
+	<button ng-click="send(komentarParam)">send</button>
+	<br>{{komentarMessage}}
+
 
 </body>
 </html>
